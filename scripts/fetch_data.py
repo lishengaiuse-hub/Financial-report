@@ -419,6 +419,113 @@ def fetch_cn_sector(symbol: str, name_cn: str, sector_label: str) -> dict:
     }
 
 
+def fetch_cn_northbound() -> dict:
+    """北向资金 — today's net flow via akshare EastMoney."""
+    log.info("Fetching CN northbound fund flow")
+    try:
+        import akshare as ak
+        df = ak.stock_hsgt_fund_flow_summary_em()
+        # Rows where col2 contains '港' = cross-border (northbound) direction
+        port = df[df.iloc[:, 2].str.contains("港", na=False)]
+        net_flow = round(float(port.iloc[:, 5].sum()), 2)   # 亿元, negative = outflow
+        sh_flow  = round(float(port.iloc[0, 5]), 2) if len(port) >= 1 else None
+        sz_flow  = round(float(port.iloc[1, 5]), 2) if len(port) >= 2 else None
+        date_str = str(df.iloc[0, 0])
+        return {
+            "net_flow": net_flow, "sh_flow": sh_flow, "sz_flow": sz_flow,
+            "date": date_str, "source": "eastmoney",
+        }
+    except Exception as e:
+        log.warning(f"Northbound fetch failed: {e}")
+    return {"net_flow": None, "sh_flow": None, "sz_flow": None,
+            "date": TODAY.strftime("%b %d, %Y"), "source": "unavailable"}
+
+
+def fetch_cn_margin() -> dict:
+    """融资融券余额 — SSE + SZSE combined via akshare."""
+    log.info("Fetching CN margin balance")
+    try:
+        import akshare as ak
+        sh = ak.macro_china_market_margin_sh()
+        sz = ak.macro_china_market_margin_sz()
+
+        # Last column = 融资融券余额 (total margin balance) in yuan
+        sh_total = float(sh.iloc[-1, -1])
+        sz_total = float(sz.iloc[-1, -1])
+        combined = sh_total + sz_total        # yuan → 万亿
+        to_wanyi = lambda x: round(x / 1e12, 4)
+
+        # 12-month trend (combined) for sparkline
+        n = min(len(sh), len(sz), 12)
+        trend = [to_wanyi(float(sh.iloc[-(n - i), -1]) + float(sz.iloc[-(n - i), -1]))
+                 for i in range(n - 1, -1, -1)]
+
+        return {
+            "balance": to_wanyi(combined),      # 万亿元
+            "sh_balance": to_wanyi(sh_total),
+            "sz_balance": to_wanyi(sz_total),
+            "trend": trend,
+            "date": str(sh.iloc[-1, 0]),
+            "source": "akshare/sse+szse",
+        }
+    except Exception as e:
+        log.warning(f"Margin balance fetch failed: {e}")
+    return {"balance": None, "sh_balance": None, "sz_balance": None,
+            "trend": [], "date": TODAY.strftime("%b %d, %Y"), "source": "unavailable"}
+
+
+def fetch_cn_pmi_official() -> dict:
+    """中国官方PMI — NBS manufacturing + non-manufacturing via akshare."""
+    log.info("Fetching CN official PMI")
+    try:
+        import akshare as ak
+        df = ak.macro_china_pmi()
+        # Data is newest-first (iloc[0] = latest month)
+        latest  = df.iloc[0]
+        prev    = df.iloc[1]
+        mfg     = float(latest.iloc[1])          # 制造业-指数
+        svc     = float(latest.iloc[3])          # 非制造业-指数
+        mfg_prev = float(prev.iloc[1])
+        svc_prev = float(prev.iloc[3])
+        month   = str(latest.iloc[0])
+
+        # 12-month trend for each
+        n = min(len(df), 12)
+        mfg_trend = [float(df.iloc[i, 1]) for i in range(n - 1, -1, -1)]
+        svc_trend = [float(df.iloc[i, 3]) for i in range(n - 1, -1, -1)]
+
+        return {
+            "mfg": mfg, "mfg_prev": mfg_prev,
+            "svc": svc, "svc_prev": svc_prev,
+            "month": month, "mfg_trend": mfg_trend, "svc_trend": svc_trend,
+            "date": month, "source": "akshare/nbs",
+        }
+    except Exception as e:
+        log.warning(f"CN official PMI fetch failed: {e}")
+    return {"mfg": None, "svc": None, "month": "", "mfg_trend": [], "svc_trend": [],
+            "date": TODAY.strftime("%b %d, %Y"), "source": "unavailable"}
+
+
+def fetch_moutai() -> dict:
+    """贵州茅台 600519.SS — folk consumer-confidence proxy."""
+    log.info("Fetching Moutai (600519.SS)")
+    tk       = yf.Ticker("600519.SS")
+    hist_1y  = safe(lambda: tk.history(start=TWELVE_MONTHS_AGO), pd.DataFrame())
+    hist_ytd = safe(lambda: tk.history(start=YEAR_START), pd.DataFrame())
+
+    price = safe(lambda: round(float(hist_1y["Close"].iloc[-1]), 2))
+    prev  = safe(lambda: float(hist_1y["Close"].iloc[-2]))
+    chg   = round((price - prev) / prev * 100, 2) if price and prev else None
+    rsi   = calculate_rsi(hist_1y["Close"].tolist() if not hist_1y.empty else [])
+    ytd   = ytd_pct(hist_ytd)
+    trend = twelve_month_trend(hist_1y, n_points=12)
+
+    return {
+        "price": price, "change_pct": chg, "rsi": rsi, "ytd": ytd,
+        "trend": trend, "date": TODAY.strftime("%b %d, %Y"),
+    }
+
+
 def fetch_cn_macro() -> dict:
     log.info("Fetching CN macro: USDCNY + CN 10Y yield")
 
@@ -536,6 +643,14 @@ def run() -> dict:
         time.sleep(0.3)
 
     data["cn_macro"] = fetch_cn_macro()
+    time.sleep(0.3)
+    data["cn_northbound"] = fetch_cn_northbound()
+    time.sleep(0.3)
+    data["cn_margin"] = fetch_cn_margin()
+    time.sleep(0.3)
+    data["cn_pmi"] = fetch_cn_pmi_official()
+    time.sleep(0.3)
+    data["moutai"] = fetch_moutai()
     time.sleep(0.3)
 
     # Report metadata

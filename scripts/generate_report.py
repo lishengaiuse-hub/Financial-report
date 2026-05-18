@@ -965,6 +965,228 @@ def render_cn_macro(cn_macro: dict) -> str:
 </div>"""
 
 
+def render_cn_northbound(nb: dict) -> str:
+    net   = nb.get("net_flow")
+    sh    = nb.get("sh_flow")
+    sz    = nb.get("sz_flow")
+    date  = nb.get("date", "")
+    is_in = net is not None and net >= 0
+
+    if net is None:
+        badge = '<span class="badge b-neutral">暂无数据</span>'
+        val_col = "nt"
+    elif net >= 20:
+        badge = '<span class="badge b-up">大幅净买入</span>'
+        val_col = "up"
+    elif net >= 0:
+        badge = '<span class="badge b-up">净买入</span>'
+        val_col = "up"
+    elif net >= -20:
+        badge = '<span class="badge b-dn">净卖出</span>'
+        val_col = "dn"
+    else:
+        badge = '<span class="badge b-dn">大幅净卖出</span>'
+        val_col = "dn"
+
+    net_str  = (("+" if is_in else "") + fmt(net, 2, suffix=" 亿元")) if net is not None else "N/A"
+    sh_str   = (("+" if sh and sh >= 0 else "") + fmt(sh, 2) + " 亿") if sh is not None else "—"
+    sz_str   = (("+" if sz and sz >= 0 else "") + fmt(sz, 2) + " 亿") if sz is not None else "—"
+
+    # Simple bar gauge: net flow range -200 to +200 亿
+    left = pin_pct(net, -200, 200)
+    return f"""
+<div class="card card-sm gauge fade-in">
+  <p class="gauge-name">北向资金净流入 (沪深港通) {badge}</p>
+  <p class="gauge-val {val_col}">{net_str}</p>
+  <p class="gauge-date">{date} &nbsp;·&nbsp; 沪股通: {sh_str} &nbsp;|&nbsp; 深股通: {sz_str}</p>
+  <div class="gbar">
+    <div class="gs" style="width:50%;background:#f05252"></div>
+    <div class="gs" style="width:50%;background:#22d87c"></div>
+  </div>
+  <div class="mwrap"><div class="mkr" style="left:{left}"></div></div>
+  <div class="glbls"><span>–200亿 大幅卖出</span><span>0 中性</span><span>+200亿 大幅买入</span></div>
+  <p style="font-size:9px;color:var(--text3);margin-top:6px">
+    北向资金 = 外资通过沪深港通买卖A股的净额，正值表示外资净买入A股，是A股市场重要的"聪明钱"风向标
+  </p>
+</div>"""
+
+
+def render_cn_margin(mg: dict) -> str:
+    bal   = mg.get("balance")       # 万亿元
+    sh    = mg.get("sh_balance")
+    sz    = mg.get("sz_balance")
+    trend = mg.get("trend") or []
+    date  = mg.get("date", "")
+
+    # Typical range: 1.5 – 3.5 万亿
+    left = pin_pct(bal, 1.5, 3.5)
+    if bal is None:
+        badge = '<span class="badge b-neutral">暂无数据</span>'
+        val_col = "nt"
+    elif bal >= 3.0:
+        badge = '<span class="badge b-dn">高杠杆警戒</span>'
+        val_col = "dn"
+    elif bal >= 2.5:
+        badge = '<span class="badge b-warn">杠杆偏高</span>'
+        val_col = "wn"
+    elif bal >= 1.8:
+        badge = '<span class="badge b-neutral">正常</span>'
+        val_col = "nt"
+    else:
+        badge = '<span class="badge b-up">杠杆偏低</span>'
+        val_col = "up"
+
+    bal_str = fmt(bal, 4, suffix=" 万亿元") if bal else "N/A"
+    sub = f"沪市: {fmt(sh,4)} 万亿 &nbsp;|&nbsp; 深市: {fmt(sz,4)} 万亿" if sh and sz else date
+
+    js = f"sparkline('cnMarginChart',{json.dumps(trend)},'#f5a623','rgba(245,166,35,0.12)');" if trend else ""
+
+    return f"""
+<div class="card card-sm gauge fade-in">
+  <p class="gauge-name">融资融券余额 (沪+深) {badge}</p>
+  <p class="gauge-val {val_col}">{bal_str}</p>
+  <p class="gauge-date">{sub}</p>
+  <div class="gbar">
+    <div class="gs" style="width:25%;background:#22d87c"></div>
+    <div class="gs" style="width:35%;background:#f5a623"></div>
+    <div class="gs" style="width:25%;background:#f07050"></div>
+    <div class="gs" style="width:15%;background:#f05252"></div>
+  </div>
+  <div class="mwrap"><div class="mkr" style="left:{left}"></div></div>
+  <div class="glbls"><span>&lt;1.5 低杠杆</span><span>1.5–2.5 正常</span><span>2.5–3.5 偏高</span><span>&gt;3.5 极高</span></div>
+  <div style="height:46px;margin:8px -14px -12px;overflow:hidden"><canvas id="cnMarginChart"></canvas></div>
+  <p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--text3);text-align:center;padding:2px 0 2px">12-Month Trend</p>
+  <p style="font-size:9px;color:var(--text3);margin-top:2px">融资余额历史峰值 ~2.27万亿 (2015年6月崩盘前)</p>
+</div>
+<script>(function(){{ {js} }})();</script>"""
+
+
+def render_cn_pmi(pmi: dict) -> str:
+    mfg       = pmi.get("mfg")
+    svc       = pmi.get("svc")
+    mfg_prev  = pmi.get("mfg_prev")
+    svc_prev  = pmi.get("svc_prev")
+    month     = pmi.get("month", "")
+    mfg_trend = pmi.get("mfg_trend") or []
+    svc_trend = pmi.get("svc_trend") or []
+
+    def pmi_badge(v):
+        if v is None: return '<span class="badge b-neutral">N/A</span>'
+        if v >= 52:   return '<span class="badge b-up">强劲扩张</span>'
+        if v >= 50:   return '<span class="badge b-up">扩张</span>'
+        if v >= 48:   return '<span class="badge b-warn">收缩</span>'
+        return             '<span class="badge b-dn">显著收缩</span>'
+
+    def pmi_col(v):
+        if v is None: return "nt"
+        return "up" if v >= 50 else "dn"
+
+    def trend_arrow(cur, prev):
+        if cur is None or prev is None: return ""
+        return " ▲" if cur > prev else " ▽" if cur < prev else " ─"
+
+    mfg_left = pin_pct(mfg, 40, 60)
+    svc_left = pin_pct(svc, 40, 60)
+
+    js_mfg = f"sparkline('cnPmiMfgChart',{json.dumps(mfg_trend)},'#22d87c','rgba(34,216,124,0.1)');" if mfg_trend else ""
+    js_svc = f"sparkline('cnPmiSvcChart',{json.dumps(svc_trend)},'#4e9eff','rgba(78,158,255,0.1)');" if svc_trend else ""
+
+    def gauge_card(label, val, prev, left, col, badge, canvas, clr, fill):
+        val_str = fmt(val, 1, fallback="N/A") + trend_arrow(val, prev)
+        sub = f"前值 {fmt(prev,1)} &nbsp;·&nbsp; {month}"
+        return f"""
+  <div class="card card-sm gauge">
+    <p class="gauge-name">{label} {badge}</p>
+    <p class="gauge-val {col}">{val_str}</p>
+    <p class="gauge-date">{sub}</p>
+    <div class="gbar">
+      <div class="gs" style="width:30%;background:#f05252"></div>
+      <div class="gs" style="width:20%;background:#556"></div>
+      <div class="gs" style="width:25%;background:#7aca56"></div>
+      <div class="gs" style="width:25%;background:#22d87c"></div>
+    </div>
+    <div class="mwrap"><div class="mkr" style="left:{left}"></div></div>
+    <div class="glbls"><span>收缩&lt;50</span><span>~50荣枯线</span><span>50–52扩张</span><span>&gt;52强劲</span></div>
+    <div style="height:40px;margin:6px -14px -12px;overflow:hidden"><canvas id="{canvas}"></canvas></div>
+    <p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--text3);text-align:center;padding:2px 0 2px">12-Month Trend</p>
+  </div>"""
+
+    mfg_card = gauge_card("制造业PMI (NBS官方)", mfg, mfg_prev, mfg_left,
+                          pmi_col(mfg), pmi_badge(mfg), "cnPmiMfgChart", "#22d87c", "rgba(34,216,124,0.1)")
+    svc_card = gauge_card("非制造业PMI (NBS官方)", svc, svc_prev, svc_left,
+                          pmi_col(svc), pmi_badge(svc), "cnPmiSvcChart", "#4e9eff", "rgba(78,158,255,0.1)")
+
+    return f"""
+<div class="grid-2 fade-in">
+  {mfg_card}
+  {svc_card}
+</div>
+<script>(function(){{ {js_mfg} {js_svc} }})();</script>"""
+
+
+def render_moutai(mt: dict) -> str:
+    price = mt.get("price")
+    chg   = mt.get("change_pct")
+    rsi   = mt.get("rsi")
+    ytd   = mt.get("ytd")
+    trend = mt.get("trend") or []
+    date  = mt.get("date", "")
+
+    price_str = fmt(price, 2, prefix="¥", fallback="N/A")
+    sign  = "▲" if chg and chg >= 0 else "▽"
+    chg_col = "up" if chg and chg >= 0 else "dn"
+    chg_str = f"{sign} {fmt(abs(chg) if chg else 0, 2)}%" if chg is not None else ""
+    ytd_str = (("+" if ytd and ytd >= 0 else "") + fmt(ytd, 1, suffix="%")) if ytd is not None else "N/A"
+
+    # Folk interpretation
+    if ytd and ytd >= 15:
+        interp = "商务消费旺盛，市场风险偏好高 — 历史上茅台大涨时A股往往处于牛市区间"
+        interp_col = "#22d87c"
+    elif ytd and ytd >= 0:
+        interp = "消费情绪平稳，市场处于正常状态"
+        interp_col = "#8b909e"
+    elif ytd and ytd >= -15:
+        interp = "消费承压或政策限制，需关注宏观需求走弱信号"
+        interp_col = "#f5a623"
+    else:
+        interp = "⚠️ 消费显著下滑 — 类似2012年反腐周期，需高度警惕经济下行压力"
+        interp_col = "#f05252"
+
+    js = f"sparkline('moutaiChart',{json.dumps(trend)},'#c8a96e','rgba(200,169,110,0.15)');" if trend else ""
+
+    return f"""
+<div class="card fade-in" style="padding-bottom:0">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+    <div>
+      <p style="font-size:9px;font-family:'DM Mono',monospace;color:var(--accent);letter-spacing:.1em;margin-bottom:4px">
+        🍶 民间信心指数 · FOLK CONFIDENCE PROXY
+      </p>
+      <p style="font-size:14px;font-weight:700;margin-bottom:2px">贵州茅台 Kweichow Moutai</p>
+      <p style="font-size:10px;font-family:'DM Mono',monospace;color:var(--text3)">600519.SS · A股 · 消费品龙头</p>
+    </div>
+    <div style="text-align:right">
+      <p style="font-family:'DM Serif Display',serif;font-size:26px;line-height:1">{price_str}</p>
+      <p style="font-size:13px;color:var(--{chg_col});margin-top:2px">{chg_str}</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap">
+    <div><p style="font-size:10px;color:var(--text3)">YTD</p>
+         <p style="font-size:14px;font-weight:600;color:var(--{pct_color(ytd)})">{ytd_str}</p></div>
+    <div><p style="font-size:10px;color:var(--text3)">RSI(14)</p>
+         <p style="font-size:14px;font-weight:600;class="{rsi_color(rsi)}">{fmt(rsi,1,fallback="N/A")} {rsi_badge(rsi)}</p></div>
+    <div style="flex:1;min-width:160px">
+      <div style="background:rgba(200,169,110,0.08);border:1px solid rgba(200,169,110,0.2);
+                  border-radius:8px;padding:8px 10px">
+        <p style="font-size:10px;color:{interp_col};line-height:1.5">{interp}</p>
+      </div>
+    </div>
+  </div>
+  <div style="height:54px;margin:0 -16px -16px;overflow:hidden"><canvas id="moutaiChart"></canvas></div>
+  <p style="font-family:'DM Mono',monospace;font-size:8px;color:var(--text3);text-align:center;padding:3px 0 3px">12-Month Trend</p>
+</div>
+<script>(function(){{ {js} }})();</script>"""
+
+
 def sec_cn(label, title):
     return (f'<div class="sec" style="--accent:#f87171">'
             f'<span class="sec-num" style="color:#f87171;border-color:rgba(248,113,113,0.3)">{label}</span>'
@@ -973,9 +1195,13 @@ def sec_cn(label, title):
 
 
 def render_cn_page(data: dict) -> str:
-    cn_indices = data.get("cn_indices", [])
-    cn_sectors = data.get("cn_sectors", [])
-    cn_macro   = data.get("cn_macro", {})
+    cn_indices  = data.get("cn_indices", [])
+    cn_sectors  = data.get("cn_sectors", [])
+    cn_macro    = data.get("cn_macro", {})
+    cn_nb       = data.get("cn_northbound", {})
+    cn_mg       = data.get("cn_margin", {})
+    cn_pmi      = data.get("cn_pmi", {})
+    moutai      = data.get("moutai", {})
 
     return f"""
 <div style="background:linear-gradient(135deg,rgba(220,38,38,0.1),rgba(220,38,38,0.03));
@@ -1001,6 +1227,18 @@ def render_cn_page(data: dict) -> str:
 
 {sec_cn("Ⓓ", "宏观参考指标 — 人民币汇率 · 国债收益率")}
 {render_cn_macro(cn_macro)}
+
+{sec_cn("Ⓔ", "北向资金 — 外资净流入 / 净流出 (沪深港通)")}
+{render_cn_northbound(cn_nb)}
+
+{sec_cn("Ⓕ", "融资融券余额 — 市场杠杆温度计")}
+{render_cn_margin(cn_mg)}
+
+{sec_cn("Ⓖ", "官方PMI — 制造业 · 非制造业 (NBS)")}
+{render_cn_pmi(cn_pmi)}
+
+{sec_cn("Ⓗ", "茅台信心指数 — 民间消费景气代理指标")}
+{render_moutai(moutai)}
 """
 
 
