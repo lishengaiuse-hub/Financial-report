@@ -6,13 +6,21 @@
 #   - Manual trigger via GitHub Actions UI (workflow_dispatch)
 #
 # Optional secrets (set in repo Settings → Secrets → Actions):
-#   FRED_API_KEY  — Free key from https://fred.stlouisfed.org/docs/api/api_key.html
-#                   Without it, macro data (CPI/NFP/ISM) will show N/A;
-#                   market-priced data (10Y yield, DXY) uses yfinance fallback.
+#   FRED_API_KEY    — Free key from https://fred.stlouisfed.org/docs/api/api_key.html
+#                     Without it, macro data (CPI/NFP/ISM) will show N/A;
+#                     market-priced data (10Y yield, DXY) uses yfinance fallback.
+#
+# Email secrets (all required for auto-delivery, skipped gracefully if absent):
+#   EMAIL_FROM      — Sender Gmail address, e.g. yourname@gmail.com
+#   EMAIL_PASSWORD  — Gmail App Password (16 chars); generate at:
+#                     myaccount.google.com/apppasswords
+#   EMAIL_TO        — Recipient(s), comma-separated, e.g. a@gmail.com,b@qq.com
+#   EMAIL_CC        — CC recipients, comma-separated (optional, can be empty)
 #
 # Outputs:
 #   - output/index.html  committed back to the repo
 #   - Deployed to GitHub Pages at https://<username>.github.io/<repo>/
+#   - HTML report emailed to EMAIL_TO (if email secrets are configured)
 
 name: Weekly Market Report
 
@@ -63,10 +71,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── 4. Run the report pipeline ───────────────────────────────
-      - name: Generate report
+      # ── 4. Run the report pipeline (fetch → generate → email) ───────
+      - name: Generate and send report
         env:
-          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          FRED_API_KEY:    ${{ secrets.FRED_API_KEY }}
+          EMAIL_FROM:      ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD:  ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO:        ${{ secrets.EMAIL_TO }}
+          EMAIL_CC:        ${{ secrets.EMAIL_CC }}
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONUNBUFFERED: "1"
         run: |
