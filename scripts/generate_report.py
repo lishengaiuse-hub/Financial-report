@@ -771,6 +771,54 @@ def render_watchlist(data: dict) -> str:
 
 
 # ─────────────────────────────────────────────
+# AI ANALYSIS RENDERER
+# ─────────────────────────────────────────────
+
+def render_ai_analysis(ai: dict) -> str:
+    commentary = ai.get("commentary")
+    model      = ai.get("model", "deepseek-chat")
+    tokens     = ai.get("tokens_used", 0)
+    error      = ai.get("error")
+
+    if not commentary:
+        reason = {
+            "no_api_key":           "未配置 DEEPSEEK_API_KEY，跳过 AI 解读。",
+            "openai_not_installed": "openai 包未安装，跳过 AI 解读。",
+        }.get(error, f"AI 解读生成失败（{error}）。")
+        return f"""
+<div class="card fade-in" style="border-color:rgba(200,169,110,0.15)">
+  <p style="font-size:11px;color:var(--text3);text-align:center;padding:16px 0">{reason}</p>
+</div>"""
+
+    # Paragraph breaks: split on double-newline or numbered list markers
+    paras = [p.strip() for p in commentary.replace("①","<br><br>①").replace("②","<br><br>②")
+             .replace("③","<br><br>③").replace("④","<br><br>④").replace("⑤","<br><br>⑤")
+             .split("<br><br>") if p.strip()]
+    body_html = "</p><p style='margin-top:10px;font-size:13px;color:#c8c0a8;line-height:1.8'>".join(paras)
+
+    return f"""
+<div class="card fade-in" style="background:linear-gradient(135deg,rgba(200,169,110,0.06),rgba(200,169,110,0.02));
+     border:1px solid rgba(200,169,110,0.2);">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:20px">🤖</span>
+      <div>
+        <p style="font-size:13px;font-weight:600;color:var(--accent)">AI 市场情报解读</p>
+        <p style="font-size:9px;font-family:'DM Mono',monospace;color:var(--text3)">
+          Powered by {model} &nbsp;·&nbsp; {tokens} tokens
+        </p>
+      </div>
+    </div>
+    <span class="badge b-accent">DeepSeek</span>
+  </div>
+  <p style="font-size:13px;color:#c8c0a8;line-height:1.8">{body_html}</p>
+  <p style="font-size:9px;color:var(--text3);margin-top:12px;font-family:'DM Mono',monospace">
+    ⚠️ AI 生成内容仅供参考，不构成投资建议。模型可能存在幻觉，请结合原始数据独立判断。
+  </p>
+</div>"""
+
+
+# ─────────────────────────────────────────────
 # CHINA A-SHARE RENDERERS
 # ─────────────────────────────────────────────
 
@@ -1413,6 +1461,10 @@ hr.div{{border:none;border-top:1px solid var(--border);margin:28px 0}}
 <div class="sec"><span class="sec-num">⑫</span><span class="sec-title">Priority Watchlist &amp; Strategy</span><div class="sec-line"></div></div>
 {sec_watchlist}
 
+<hr class="div">
+<div class="sec"><span class="sec-num">⑬</span><span class="sec-title">AI 市场情报解读 — Powered by DeepSeek</span><div class="sec-line"></div></div>
+{sec_ai}
+
 {sec_cn_page}
 
 </div>
@@ -1468,6 +1520,7 @@ def generate(data: dict) -> str:
         sec_semi=render_semiconductor(semi),
         sec_commodities=render_commodities(comms),
         sec_watchlist=render_watchlist(data),
+        sec_ai=render_ai_analysis(data.get("ai_analysis") or {}),
         sec_cn_page=render_cn_page(data),
         spx_trend=json.dumps(spx.get("trend_10y") or []),
         ndx_trend=json.dumps(ndx.get("trend_10y") or []),

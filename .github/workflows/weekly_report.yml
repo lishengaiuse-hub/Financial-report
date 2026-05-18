@@ -10,6 +10,10 @@
 #                     Without it, macro data (CPI/NFP/ISM) will show N/A;
 #                     market-priced data (10Y yield, DXY) uses yfinance fallback.
 #
+# AI analysis secret (optional — skipped gracefully if absent):
+#   DEEPSEEK_API_KEY — DeepSeek API key (sk-...); get from platform.deepseek.com/api_keys
+#                      Adds a ⑬ AI市场情报解读 section; cost ~$0.002 per report
+#
 # Email secrets (all required for auto-delivery, skipped gracefully if absent):
 #   EMAIL_FROM      — Sender Gmail address, e.g. yourname@gmail.com
 #   EMAIL_PASSWORD  — Gmail App Password (16 chars); generate at:
@@ -75,6 +79,7 @@ jobs:
       - name: Generate and send report
         env:
           FRED_API_KEY:    ${{ secrets.FRED_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           EMAIL_FROM:      ${{ secrets.EMAIL_FROM }}
           EMAIL_PASSWORD:  ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO:        ${{ secrets.EMAIL_TO }}

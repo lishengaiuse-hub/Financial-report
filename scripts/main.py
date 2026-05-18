@@ -28,6 +28,11 @@ def main():
         json.dump(data, f, indent=2, default=str)
     log.info(f"Data saved → {data_path}")
 
+    # ── Step 1b: AI Analysis (DeepSeek) ────────────────────────────
+    log.info("═══ Step 1b: Generating AI analysis (DeepSeek) ═══")
+    from generate_analysis import run as analysis_run
+    data["ai_analysis"] = analysis_run(data)
+
     # ── Step 2: Generate HTML report ────────────────────────────────
     log.info("═══ Step 2/3: Generating HTML report ═══")
     from generate_report import generate
