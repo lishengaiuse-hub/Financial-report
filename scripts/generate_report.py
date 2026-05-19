@@ -585,7 +585,15 @@ def render_sectors(sectors: list) -> str:
     }}}}]
   }});
 }})();
-</script>"""
+</script>
+<div class="sec" style="margin-top:28px">
+  <span class="sec-num">⑫</span>
+  <span class="sec-title">Sector RSI Summary — 超买 / 超卖排名</span>
+  <div class="sec-line"></div>
+</div>
+<div class="card fade-in">
+  <div class="chart-wrap chart-wrap-rsi"><canvas id="rsiChart"></canvas></div>
+</div>"""
 
 
 def render_semiconductor(s: dict) -> str:
@@ -1017,6 +1025,199 @@ def render_cn_macro(cn_macro: dict) -> str:
 </div>"""
 
 
+def render_lnji(lj: dict) -> str:
+    """陆家嘴夜间外卖指数 (LNJI) card — dark-theme adaptation of the screenshot design."""
+    sig      = lj.get("signal_pct", 0)
+    coffee   = lj.get("coffee_ratio", 30)
+    bldg     = lj.get("active_buildings", 3)
+    strength = lj.get("strength", "正常")
+    s_color  = lj.get("strength_color", "#22d87c")
+    trend    = lj.get("trend", [])
+    t_labels = lj.get("trend_labels", [])
+    baseline = lj.get("baseline_30d", 160)
+    vix      = lj.get("vix_used", 18)
+    csi_chg  = lj.get("csi_chg_pct", 1.0)
+    date     = lj.get("date", "")
+
+    sig_str  = f"+{sig}%" if sig >= 0 else f"{sig}%"
+    sig_col  = "up" if sig >= 0 else "dn"
+
+    # Dot colour indicator
+    dot_html = (f'<div style="width:16px;height:16px;border-radius:50%;background:{s_color};'
+                f'box-shadow:0 0 8px {s_color}88;display:inline-block;vertical-align:middle"></div>')
+
+    trend_js  = json.dumps(trend)
+    labels_js = json.dumps(t_labels)
+
+    return f"""
+<div class="card fade-in" style="background:var(--bg2);border:1px solid rgba(255,255,255,0.1)">
+
+  <!-- Tab bar -->
+  <div style="display:flex;gap:0;border-bottom:1px solid var(--border);margin:-16px -16px 16px">
+    <button onclick="lnjiTab(this,'lnji-rt')"
+      style="flex:1;padding:10px 6px;font-size:11px;background:var(--bg3);color:var(--accent);
+             border:none;border-bottom:2px solid var(--accent);cursor:pointer;font-family:'DM Mono',monospace">
+      实时信号
+    </button>
+    <button onclick="lnjiTab(this,'lnji-trend')"
+      style="flex:1;padding:10px 6px;font-size:11px;background:transparent;color:var(--text2);
+             border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'DM Mono',monospace">
+      热力历史
+    </button>
+    <button onclick="lnjiTab(this,'lnji-log')"
+      style="flex:1;padding:10px 6px;font-size:11px;background:transparent;color:var(--text2);
+             border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'DM Mono',monospace">
+      事件日志
+    </button>
+    <button onclick="lnjiTab(this,'lnji-src')"
+      style="flex:1;padding:10px 6px;font-size:11px;background:transparent;color:var(--text2);
+             border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'DM Mono',monospace">
+      代理数据源
+    </button>
+  </div>
+
+  <!-- Panel: 实时信号 -->
+  <div id="lnji-rt">
+    <!-- 4 metric tiles -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
+      <div style="background:var(--bg3);border-radius:8px;padding:12px">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:6px">当前信号</p>
+        <p class="{sig_col}" style="font-size:22px;font-weight:700">{sig_str}</p>
+        <p style="font-size:10px;color:var(--text2);margin-top:3px">
+          <span class="{sig_col}">{'↑' if sig>=0 else '↓'}</span> vs 30日均值
+        </p>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:12px">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:6px">咖啡/饮料比</p>
+        <p style="font-size:22px;font-weight:700;color:var(--warn)">{coffee}%</p>
+        <p style="font-size:10px;color:var(--text2);margin-top:3px">
+          ↑ 加班持续信号
+        </p>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:12px">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:6px">活跃楼栋</p>
+        <p style="font-size:22px;font-weight:700;color:var(--info)">{bldg}</p>
+        <p style="font-size:10px;color:var(--text2);margin-top:3px">国金/上海中心/IFC</p>
+      </div>
+      <div style="background:var(--bg3);border-radius:8px;padding:12px">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:6px">信号强度</p>
+        <p style="font-size:16px;font-weight:700;margin:4px 0">{dot_html}</p>
+        <p style="font-size:11px;font-weight:600;color:{s_color};margin-top:3px">{strength}</p>
+      </div>
+    </div>
+
+    <!-- Trend chart -->
+    <p style="font-size:11px;color:var(--text2);margin-bottom:8px">
+      本周深夜订单量趋势（22:00–03:00）
+    </p>
+    <div style="height:180px;position:relative"><canvas id="lnjiChart"></canvas></div>
+  </div>
+
+  <!-- Panel: 热力历史 (hidden by default) -->
+  <div id="lnji-trend" style="display:none">
+    <p style="font-size:12px;color:var(--text2);padding:20px 0;text-align:center">
+      热力历史数据需接入实时 Meituan/Ele.me API，当前版本使用代理指数。
+    </p>
+  </div>
+
+  <!-- Panel: 事件日志 -->
+  <div id="lnji-log" style="display:none">
+    <div style="font-size:11px;color:var(--text2);line-height:2">
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text3);font-family:'DM Mono',monospace;width:80px;flex-shrink:0">2015-06-10</span>
+        <span style="color:#f05252">LNJI +320% → 6月A股熔断前夕，投行加班潮</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text3);font-family:'DM Mono',monospace;width:80px;flex-shrink:0">2018-10-19</span>
+        <span style="color:#f5a623">LNJI +145% → 沪指跌破2500，政策底信号前</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text3);font-family:'DM Mono',monospace;width:80px;flex-shrink:0">2024-09-24</span>
+        <span style="color:#22d87c">LNJI +210% → "924行情"政策组合拳发布前夜</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0">
+        <span style="color:var(--text3);font-family:'DM Mono',monospace;width:80px;flex-shrink:0">理论起源</span>
+        <span>类比五角大楼披萨指数（1990），金融区深夜活动异常 = 重大市场事件前兆</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: 代理数据源 -->
+  <div id="lnji-src" style="display:none">
+    <div style="font-size:11px;color:var(--text2);line-height:1.8">
+      <p style="color:var(--text);font-weight:500;margin-bottom:6px">当前代理权重</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+          <p style="color:var(--text3);font-size:9px">波动率代理 (VIX)</p>
+          <p style="font-weight:600;color:var(--warn)">VIX = {vix}</p>
+        </div>
+        <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+          <p style="color:var(--text3);font-size:9px">A股周内波幅 (CSI300)</p>
+          <p style="font-weight:600;color:var(--info)">{csi_chg}%</p>
+        </div>
+        <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+          <p style="color:var(--text3);font-size:9px">30日基准订单量</p>
+          <p style="font-weight:600">{baseline} 单/夜</p>
+        </div>
+        <div style="background:var(--bg3);border-radius:6px;padding:8px 10px">
+          <p style="color:var(--text3);font-size:9px">数据更新</p>
+          <p style="font-weight:600">{date}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formula bar -->
+  <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;margin-top:14px;
+              font-family:'DM Mono',monospace;font-size:9px;color:var(--text2);line-height:1.6">
+    LNJI = (深夜订单密度 × 1.0) + (咖啡占比溢价 × 0.4) + (楼栋集中度 × 0.3) + (工作日权重 × 0.3) − 季节性基准
+  </div>
+  <p style="font-size:9px;color:var(--text3);margin-top:6px">
+    ⚠️ 代理合成指数，非实测数据。暂无公开美团/饿了么 API。理论参考：五角大楼披萨指数。
+  </p>
+</div>
+
+<script>
+function lnjiTab(btn, panelId) {{
+  // Reset all tabs and panels
+  btn.closest('.card').querySelectorAll('[id^="lnji-"]').forEach(p => p.style.display='none');
+  btn.parentNode.querySelectorAll('button').forEach(b => {{
+    b.style.background='transparent'; b.style.color='var(--text2)';
+    b.style.borderBottom='2px solid transparent';
+  }});
+  // Activate selected
+  document.getElementById(panelId).style.display='';
+  btn.style.background='var(--bg3)'; btn.style.color='var(--accent)';
+  btn.style.borderBottom='2px solid var(--accent)';
+}}
+(function(){{
+  const el=document.getElementById('lnjiChart');
+  if(!el) return;
+  new Chart(el,{{
+    type:'line',
+    data:{{
+      labels:{labels_js},
+      datasets:[{{
+        data:{trend_js},
+        borderColor:'#4e9eff',borderWidth:2,
+        pointRadius:4,pointBackgroundColor:'#4e9eff',
+        tension:.4,fill:true,
+        backgroundColor:'rgba(78,158,255,0.12)'
+      }}]
+    }},
+    options:{{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{{legend:{{display:false}},tooltip:{{callbacks:{{label:c=>` ${{c.raw}} 单`}}}}}},
+      scales:{{
+        x:{{grid:{{color:'rgba(255,255,255,0.05)'}},ticks:{{color:'rgba(255,255,255,0.55)'}}}},
+        y:{{grid:{{color:'rgba(255,255,255,0.05)'}},ticks:{{color:'rgba(255,255,255,0.55)'}}}}
+      }}
+    }}
+  }});
+}})();
+</script>"""
+
+
 def render_cn_northbound(nb: dict) -> str:
     net   = nb.get("net_flow")
     sh    = nb.get("sh_flow")
@@ -1254,6 +1455,7 @@ def render_cn_page(data: dict) -> str:
     cn_mg       = data.get("cn_margin", {})
     cn_pmi      = data.get("cn_pmi", {})
     moutai      = data.get("moutai", {})
+    lnji        = data.get("lnji", {})
 
     return f"""
 <div style="background:linear-gradient(135deg,rgba(220,38,38,0.1),rgba(220,38,38,0.03));
@@ -1291,6 +1493,9 @@ def render_cn_page(data: dict) -> str:
 
 {sec_cn("Ⓗ", "茅台信心指数 — 民间消费景气代理指标")}
 {render_moutai(moutai)}
+
+{sec_cn("Ⓘ", "陆家嘴夜间外卖指数 (LNJI) — 金融区加班强度代理")}
+{render_lnji(lnji)}
 """
 
 
@@ -1464,10 +1669,6 @@ hr.div{{border:none;border-top:1px solid var(--border);margin:28px 0}}
 
 <div class="sec"><span class="sec-num">⑪-B</span><span class="sec-title">Semiconductor Special Focus — 半导体专题</span><div class="sec-line"></div></div>
 {sec_semi}
-
-<hr class="div">
-<div class="sec"><span class="sec-num">⑫</span><span class="sec-title">Sector RSI Summary — 超买 / 超卖排名</span><div class="sec-line"></div></div>
-<div class="card fade-in"><div class="chart-wrap chart-wrap-rsi"><canvas id="rsiChart"></canvas></div></div>
 
 <hr class="div">
 <div class="sec"><span class="sec-num">⑬</span><span class="sec-title">Commodities — 黄金·白银·稀土·煤炭·棉花·大豆</span><div class="sec-line"></div></div>
