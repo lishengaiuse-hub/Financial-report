@@ -2,11 +2,11 @@
   "spx": {
     "symbol": "^GSPC",
     "label": "S&P 500",
-    "price": 7363.68994140625,
-    "change_pct": -0.53,
+    "price": 7345.83984375,
+    "change_pct": -0.77,
     "pe": null,
-    "rsi": 62.43,
-    "ytd": 7.37,
+    "rsi": 60.72,
+    "ytd": 7.11,
     "trend_10y": [
       2040.04,
       2151.33,
@@ -31,18 +31,18 @@
       6067.7,
       6229.98,
       6840.51,
-      7363.69
+      7346.06
     ],
     "date": "May 19, 2026"
   },
   "ndx": {
     "symbol": "^NDX",
     "label": "Nasdaq 100",
-    "price": 28789.365234375,
-    "change_pct": -0.71,
+    "price": 28645.5546875,
+    "change_pct": -1.2,
     "pe": null,
-    "rsi": 64.76,
-    "ytd": 14.22,
+    "rsi": 62.34,
+    "ytd": 13.65,
     "trend_10y": [
       4315.58,
       4909.97,
@@ -67,13 +67,13 @@
       21463.04,
       22685.57,
       25668.69,
-      28789.37
+      28645.55
     ],
     "date": "May 19, 2026"
   },
   "volatility": {
-    "vix": 17.98,
-    "vxn": 24.84,
+    "vix": 18.06,
+    "vxn": 24.7,
     "date": "May 19, 2026"
   },
   "fear_greed": {
@@ -105,7 +105,7 @@
     "date": "May 19, 2026"
   },
   "fedwatch": {
-    "implied_rate": 3.62,
+    "implied_rate": 3.625,
     "cuts_priced": null,
     "date": "May 19, 2026"
   },
@@ -114,9 +114,9 @@
       "symbol": "XLE",
       "name_en": "Energy",
       "name_cn": "\u80fd\u6e90",
-      "price": 60.630001068115234,
-      "ytd": 33.67,
-      "rsi": 63.62,
+      "price": 60.814998626708984,
+      "ytd": 34.09,
+      "rsi": 64.27,
       "momentum": "Leading",
       "trend": [
         41.3,
@@ -130,16 +130,16 @@
         52.9,
         57.14,
         55.76,
-        60.63
+        60.81
       ]
     },
     {
       "symbol": "XLI",
       "name_en": "Industrials",
       "name_cn": "\u5de5\u4e1a",
-      "price": 168.64999389648438,
-      "ytd": 7.05,
-      "rsi": 43.18,
+      "price": 168.41000366210938,
+      "ytd": 6.9,
+      "rsi": 42.76,
       "momentum": "Weakening",
       "trend": [
         138.73,
@@ -153,16 +153,16 @@
         172.69,
         164.78,
         171.18,
-        168.65
+        168.41
       ]
     },
     {
       "symbol": "XLB",
       "name_en": "Materials",
       "name_cn": "\u6750\u6599",
-      "price": 49.16999816894531,
-      "ytd": 7.09,
-      "rsi": 34.82,
+      "price": 49.0099983215332,
+      "ytd": 6.74,
+      "rsi": 34.04,
       "momentum": "Weakening",
       "trend": [
         41.83,
@@ -176,16 +176,16 @@
         51.28,
         49.46,
         51.38,
-        49.17
+        49.01
       ]
     },
     {
       "symbol": "XLP",
       "name_en": "Consumer Staples",
       "name_cn": "\u5fc5\u9700\u6d88\u8d39",
-      "price": 86.2699966430664,
-      "ytd": 11.67,
-      "rsi": 65.68,
+      "price": 86.55000305175781,
+      "ytd": 12.03,
+      "rsi": 66.84,
       "momentum": "Leading",
       "trend": [
         77.37,
@@ -199,16 +199,16 @@
         87.45,
         83.78,
         81.06,
-        86.27
+        86.55
       ]
     },
     {
       "symbol": "XLU",
       "name_en": "Utilities",
       "name_cn": "\u516c\u7528\u4e8b\u4e1a",
-      "price": 43.974998474121094,
-      "ytd": 2.55,
-      "rsi": 35.81,
+      "price": 44.03499984741211,
+      "ytd": 2.69,
+      "rsi": 36.55,
       "momentum": "Weakening",
       "trend": [
         38.55,
@@ -222,16 +222,16 @@
         43.05,
         46.18,
         46.02,
-        43.97
+        44.03
       ]
     },
     {
       "symbol": "XLF",
       "name_en": "Financials",
       "name_cn": "\u91d1\u878d",
-      "price": 51.654998779296875,
-      "ytd": -5.48,
-      "rsi": 53.22,
+      "price": 51.69499969482422,
+      "ytd": -5.41,
+      "rsi": 53.72,
       "momentum": "Weakening",
       "trend": [
         50.17,
@@ -245,16 +245,16 @@
         53.98,
         48.58,
         52.17,
-        51.65
+        51.69
       ]
     },
     {
       "symbol": "XLV",
       "name_en": "Health Care",
       "name_cn": "\u533b\u7597",
-      "price": 147.16000366210938,
-      "ytd": -4.98,
-      "rsi": 54.34,
+      "price": 147.52999877929688,
+      "ytd": -4.74,
+      "rsi": 55.44,
       "momentum": "Weakening",
       "trend": [
         126.51,
@@ -268,16 +268,16 @@
         157.06,
         149.55,
         147.77,
-        147.16
+        147.53
       ]
     },
     {
       "symbol": "XLC",
       "name_en": "Comm. Services",
       "name_cn": "\u901a\u4fe1",
-      "price": 116.91999816894531,
-      "ytd": 0.34,
-      "rsi": 54.1,
+      "price": 116.69000244140625,
+      "ytd": 0.14,
+      "rsi": 52.89,
       "momentum": "Improving",
       "trend": [
         99.46,
@@ -291,16 +291,16 @@
         115.39,
         114.9,
         117.36,
-        116.92
+        116.69
       ]
     },
     {
       "symbol": "XLY",
       "name_en": "Consumer Discr.",
       "name_cn": "\u975e\u5fc5\u9700\u6d88\u8d39",
-      "price": 114.7300033569336,
-      "ytd": -2.86,
-      "rsi": 40.65,
+      "price": 114.47750091552734,
+      "ytd": -3.08,
+      "rsi": 39.89,
       "momentum": "Lagging",
       "trend": [
         107.21,
@@ -314,16 +314,16 @@
         117.75,
         111.3,
         118.18,
-        114.73
+        114.48
       ]
     },
     {
       "symbol": "XLK",
       "name_en": "Info. Technology",
       "name_cn": "\u4fe1\u606f\u6280\u672f",
-      "price": 171.97000122070312,
-      "ytd": 19.32,
-      "rsi": 63.13,
+      "price": 171.38999938964844,
+      "ytd": 18.92,
+      "rsi": 62.01,
       "momentum": "Leading",
       "trend": [
         116.4,
@@ -337,14 +337,14 @@
         140.95,
         137.67,
         150.3,
-        171.97
+        171.39
       ]
     }
   ],
   "semiconductor": {
-    "soxx_price": 482.8599853515625,
-    "soxx_rsi": 55.42,
-    "soxx_ytd": 53.99,
+    "soxx_price": 482.82000732421875,
+    "soxx_rsi": 55.4,
+    "soxx_ytd": 54.01,
     "soxx_trend": [
       213.43,
       224.7,
@@ -357,11 +357,11 @@
       348.3,
       329.99,
       401.86,
-      482.86
+      482.82
     ],
     "soxx_52w_low": 199.93,
     "soxx_52w_high": 533.74,
-    "sox_price": 11003.0,
+    "sox_price": 11004.0,
     "sox_rsi": 55.46,
     "sox_trend": [
       4960.73,
@@ -375,7 +375,7 @@
       8048.62,
       7643.17,
       9239.29,
-      11003.03
+      11003.53
     ],
     "date": "May 19, 2026"
   },
@@ -386,9 +386,9 @@
       "name_cn": "\u9ec4\u91d1",
       "emoji": "\ud83e\udd47",
       "unit": "USD/oz",
-      "price": 4504.5,
-      "ytd": 4.41,
-      "rsi": 38.07,
+      "price": 4500.8,
+      "ytd": 4.32,
+      "rsi": 37.87,
       "trend": [
         3181.4,
         3386.6,
@@ -401,7 +401,7 @@
         4951.2,
         5115.8,
         4800.0,
-        4504.5
+        4500.8
       ],
       "date": "May 19, 2026"
     },
@@ -411,9 +411,9 @@
       "name_cn": "\u767d\u94f6",
       "emoji": "\ud83e\udd48",
       "unit": "USD/oz",
-      "price": 74.68,
-      "ytd": 5.84,
-      "rsi": 44.45,
+      "price": 74.49,
+      "ytd": 5.6,
+      "rsi": 44.22,
       "trend": [
         32.23,
         37.09,
@@ -426,7 +426,7 @@
         76.74,
         84.67,
         79.49,
-        74.68
+        74.49
       ],
       "date": "May 19, 2026"
     },
@@ -436,9 +436,9 @@
       "name_cn": "\u7a00\u571f",
       "emoji": "\u2697\ufe0f",
       "unit": "USD (ETF)",
-      "price": 91.33,
-      "ytd": 18.95,
-      "rsi": 37.86,
+      "price": 91.0,
+      "ytd": 18.52,
+      "rsi": 37.54,
       "trend": [
         39.06,
         39.49,
@@ -451,7 +451,7 @@
         86.63,
         93.81,
         97.44,
-        91.33
+        91.0
       ],
       "date": "May 19, 2026"
     },
@@ -461,9 +461,9 @@
       "name_cn": "\u7164\u70ad",
       "emoji": "\u26ab",
       "unit": "USD/share (BTU)",
-      "price": 23.6,
-      "ytd": -22.9,
-      "rsi": 32.63,
+      "price": 23.75,
+      "ytd": -22.43,
+      "rsi": 33.21,
       "trend": [
         14.48,
         13.95,
@@ -476,7 +476,7 @@
         36.84,
         35.93,
         28.03,
-        23.6
+        23.75
       ],
       "date": "May 19, 2026"
     },
@@ -511,9 +511,9 @@
       "name_cn": "\u5927\u8c46",
       "emoji": "\ud83e\uded8",
       "unit": "USD/bu",
-      "price": 12.17,
-      "ytd": 18.19,
-      "rsi": 60.45,
+      "price": 12.14,
+      "ytd": 17.9,
+      "rsi": 59.69,
       "trend": [
         10.67,
         10.74,
@@ -526,14 +526,14 @@
         11.15,
         12.13,
         11.67,
-        12.17
+        12.14
       ],
       "date": "May 19, 2026"
     }
   ],
   "pizza": {
-    "level": 5,
-    "status": "\u6b63\u5e38",
+    "level": 4,
+    "status": "\u8f7b\u5fae\u5f02\u5e38",
     "date": "May 19, 2026",
     "source": "pizzint.watch"
   },
@@ -729,14 +729,14 @@
     "strength_color": "#22d87c",
     "trend": [
       136,
-      152
+      153
     ],
     "trend_labels": [
       "\u5468\u4e00",
       "\u4eca\u65e5"
     ],
     "baseline_30d": 168,
-    "vix_used": 17.9,
+    "vix_used": 18.0,
     "csi_chg_pct": 2.91,
     "date": "May 19, 2026",
     "source": "proxy/composite"
@@ -827,7 +827,7 @@
     ],
     "date": "May 19, 2026"
   },
-  "generated_at": "May 19, 2026 \u2014 14:05 UTC",
+  "generated_at": "May 19, 2026 \u2014 14:45 UTC",
   "report_date": "May 19, 2026",
   "report_day": "TUESDAY"
 }
