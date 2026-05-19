@@ -745,9 +745,16 @@ def render_watchlist(data: dict) -> str:
       <span class="watch-date">{d}</span>
     </div>"""
 
-    # Strategy recommendation
+    return f'<div class="card fade-in">{items}</div>'
+
+
+def render_strategy(data: dict) -> str:
+    """Today's Strategy Recommendation — standalone card."""
+    sectors  = data.get("sectors", [])
+    spx_rsi  = data.get("spx", {}).get("rsi")
+
     strategy_lines = ["Continue regular investment · Cautious buying · Manage position size"]
-    oversold_secs = [s["symbol"] for s in sectors if s.get("rsi") and s["rsi"] < 42]
+    oversold_secs   = [s["symbol"] for s in sectors if s.get("rsi") and s["rsi"] < 42]
     overbought_secs = [s["symbol"] for s in sectors if s.get("rsi") and s["rsi"] > 65]
     if overbought_secs:
         strategy_lines.append(f"规避超买板块: {', '.join(overbought_secs)}")
@@ -758,14 +765,11 @@ def render_watchlist(data: dict) -> str:
 
     strategy_html = "<br>".join(strategy_lines)
     return f"""
-<div class="card fade-in">{"".join([items])}</div>
-<div style="margin-top:20px">
-  <div class="strategy fade-in">
-    <div class="strategy-icon">🎯</div>
-    <div>
-      <p class="strategy-title">Today's Strategy Recommendation</p>
-      <p class="strategy-body">{strategy_html}</p>
-    </div>
+<div class="strategy fade-in">
+  <div class="strategy-icon">🎯</div>
+  <div>
+    <p class="strategy-title">Today's Strategy Recommendation</p>
+    <p class="strategy-body">{strategy_html}</p>
   </div>
 </div>"""
 
@@ -1341,14 +1345,14 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .gs{{height:100%}}
 .mwrap{{position:relative;height:10px}}
 .mkr{{position:absolute;width:2px;height:10px;background:var(--text);border-radius:1px;transform:translateX(-50%)}}
-.glbls{{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);margin-top:3px;font-family:'DM Mono',monospace}}
+.glbls{{display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,0.55);margin-top:3px;font-family:'DM Mono',monospace}}
 .rsi-gauge{{display:flex;align-items:flex-start;gap:8px;margin:8px 0}}
-.rsi-lbl{{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);flex-shrink:0;width:20px;margin-top:1px}}
+.rsi-lbl{{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.45);flex-shrink:0;width:20px;margin-top:1px}}
 .rsi-body{{flex:1;min-width:0}}
 .rsi-bar{{height:6px;border-radius:3px;overflow:hidden;display:flex}}
 .rsi-pin-wrap{{position:relative;height:8px}}
 .rsi-pin{{position:absolute;top:0;width:2px;height:8px;background:var(--text);border-radius:1px;transform:translateX(-50%)}}
-.rsi-ends{{display:flex;justify-content:space-between;font-size:8px;color:var(--text3);margin-top:1px;font-family:'DM Mono',monospace}}
+.rsi-ends{{display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,0.55);margin-top:1px;font-family:'DM Mono',monospace}}
 .rsi-val{{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;flex-shrink:0;width:28px;text-align:right}}
 .sparkline-area{{height:72px;margin:10px -16px -16px;position:relative;overflow:hidden}}
 .sparkline-lbl{{position:absolute;bottom:4px;width:100%;text-align:center;font-size:9px;color:var(--text3);font-family:'DM Mono',monospace}}
@@ -1431,39 +1435,43 @@ hr.div{{border:none;border-top:1px solid var(--border);margin:28px 0}}
 </header>
 <div class="container">
 
+<div class="sec"><span class="sec-num">①</span><span class="sec-title">AI 市场情报解读 — Powered by DeepSeek</span><div class="sec-line"></div></div>
+{sec_ai}
+
+<hr class="div">
+<div class="sec"><span class="sec-num">②</span><span class="sec-title">Priority Watchlist — 当前综合信号</span><div class="sec-line"></div></div>
+{sec_watchlist}
+
+<hr class="div">
+<div class="sec"><span class="sec-num">③</span><span class="sec-title">Today's Strategy Recommendation</span><div class="sec-line"></div></div>
+{sec_strategy}
+
+<hr class="div">
 {sec_pizza}
 
-<div class="sec"><span class="sec-num">②</span><span class="sec-title">Index Snapshot — 10-Year Trend</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑤</span><span class="sec-title">Index Snapshot — 10-Year Trend</span><div class="sec-line"></div></div>
 {sec_indices}
 
-<div class="sec"><span class="sec-num">③</span><span class="sec-title">Sentiment &amp; Volatility Gauges</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑥</span><span class="sec-title">Sentiment &amp; Volatility Gauges</span><div class="sec-line"></div></div>
 {sec_sentiment}
 
 <hr class="div">
 {sec_macro}
 
 <hr class="div">
-<div class="sec"><span class="sec-num">⑨</span><span class="sec-title">S&P 500 Sector Performance — GICS 10 Sectors YTD</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑪</span><span class="sec-title">S&P 500 Sector Performance — GICS 10 Sectors YTD</span><div class="sec-line"></div></div>
 {sec_sectors}
 
-<div class="sec"><span class="sec-num">⑨-B</span><span class="sec-title">Semiconductor Special Focus — 半导体专题</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑪-B</span><span class="sec-title">Semiconductor Special Focus — 半导体专题</span><div class="sec-line"></div></div>
 {sec_semi}
 
 <hr class="div">
-<div class="sec"><span class="sec-num">⑩</span><span class="sec-title">Sector RSI Summary — 超买 / 超卖排名</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑫</span><span class="sec-title">Sector RSI Summary — 超买 / 超卖排名</span><div class="sec-line"></div></div>
 <div class="card fade-in"><div class="chart-wrap chart-wrap-rsi"><canvas id="rsiChart"></canvas></div></div>
 
 <hr class="div">
-<div class="sec"><span class="sec-num">⑪</span><span class="sec-title">Commodities — 黄金·白银·稀土·煤炭·棉花·大豆</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑬</span><span class="sec-title">Commodities — 黄金·白银·稀土·煤炭·棉花·大豆</span><div class="sec-line"></div></div>
 {sec_commodities}
-
-<hr class="div">
-<div class="sec"><span class="sec-num">⑫</span><span class="sec-title">Priority Watchlist &amp; Strategy</span><div class="sec-line"></div></div>
-{sec_watchlist}
-
-<hr class="div">
-<div class="sec"><span class="sec-num">⑬</span><span class="sec-title">AI 市场情报解读 — Powered by DeepSeek</span><div class="sec-line"></div></div>
-{sec_ai}
 
 {sec_cn_page}
 
@@ -1510,7 +1518,7 @@ def generate(data: dict) -> str:
         report_date=data.get("report_date", ""),
         report_day=data.get("report_day", ""),
         generated_at=data.get("generated_at", ""),
-        sec_pizza=f'<div class="sec"><span class="sec-num">①</span>'
+        sec_pizza=f'<div class="sec"><span class="sec-num">④</span>'
                   f'<span class="sec-title">Pentagon Pizza Index — OSINT Geopolitical Tension</span>'
                   f'<div class="sec-line"></div></div>' + render_pizza(pizza),
         sec_indices=render_indices(spx, ndx),
@@ -1520,6 +1528,7 @@ def generate(data: dict) -> str:
         sec_semi=render_semiconductor(semi),
         sec_commodities=render_commodities(comms),
         sec_watchlist=render_watchlist(data),
+        sec_strategy=render_strategy(data),
         sec_ai=render_ai_analysis(data.get("ai_analysis") or {}),
         sec_cn_page=render_cn_page(data),
         spx_trend=json.dumps(spx.get("trend_10y") or []),

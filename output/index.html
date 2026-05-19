@@ -45,14 +45,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .gs{height:100%}
 .mwrap{position:relative;height:10px}
 .mkr{position:absolute;width:2px;height:10px;background:var(--text);border-radius:1px;transform:translateX(-50%)}
-.glbls{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);margin-top:3px;font-family:'DM Mono',monospace}
+.glbls{display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,0.55);margin-top:3px;font-family:'DM Mono',monospace}
 .rsi-gauge{display:flex;align-items:flex-start;gap:8px;margin:8px 0}
-.rsi-lbl{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);flex-shrink:0;width:20px;margin-top:1px}
+.rsi-lbl{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.45);flex-shrink:0;width:20px;margin-top:1px}
 .rsi-body{flex:1;min-width:0}
 .rsi-bar{height:6px;border-radius:3px;overflow:hidden;display:flex}
 .rsi-pin-wrap{position:relative;height:8px}
 .rsi-pin{position:absolute;top:0;width:2px;height:8px;background:var(--text);border-radius:1px;transform:translateX(-50%)}
-.rsi-ends{display:flex;justify-content:space-between;font-size:8px;color:var(--text3);margin-top:1px;font-family:'DM Mono',monospace}
+.rsi-ends{display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,0.55);margin-top:1px;font-family:'DM Mono',monospace}
 .rsi-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;flex-shrink:0;width:28px;text-align:right}
 .sparkline-area{height:72px;margin:10px -16px -16px;position:relative;overflow:hidden}
 .sparkline-lbl{position:absolute;bottom:4px;width:100%;text-align:center;font-size:9px;color:var(--text3);font-family:'DM Mono',monospace}
@@ -135,7 +135,59 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
 </header>
 <div class="container">
 
-<div class="sec"><span class="sec-num">①</span><span class="sec-title">Pentagon Pizza Index — OSINT Geopolitical Tension</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">①</span><span class="sec-title">AI 市场情报解读 — Powered by DeepSeek</span><div class="sec-line"></div></div>
+
+<div class="card fade-in" style="border-color:rgba(200,169,110,0.15)">
+  <p style="font-size:11px;color:var(--text3);text-align:center;padding:16px 0">未配置 DEEPSEEK_API_KEY，跳过 AI 解读。</p>
+</div>
+
+<hr class="div">
+<div class="sec"><span class="sec-num">②</span><span class="sec-title">Priority Watchlist — 当前综合信号</span><div class="sec-line"></div></div>
+<div class="card fade-in">
+    <div class="watch-item">
+      <div class="watch-dot" style="background:var(--up)"></div>
+      <p class="watch-name">PizzINT DOUGHCON 5</p>
+      <p class="watch-note">五角大楼活动正常，短期升级风险可控</p>
+      <span class="watch-date">May 19, 2026</span>
+    </div>
+    <div class="watch-item">
+      <div class="watch-dot" style="background:var(--warn)"></div>
+      <p class="watch-name">CPI 2.4% 高于目标</p>
+      <p class="watch-note">通胀高于2%目标，Fed仍需谨慎</p>
+      <span class="watch-date">May 19, 2026</span>
+    </div>
+    <div class="watch-item">
+      <div class="watch-dot" style="background:var(--dn)"></div>
+      <p class="watch-name">10Y国债收益率 4.46%</p>
+      <p class="watch-note">高利率持续压制成长股和高P/E板块估值</p>
+      <span class="watch-date">May 19, 2026</span>
+    </div>
+    <div class="watch-item">
+      <div class="watch-dot" style="background:var(--info)"></div>
+      <p class="watch-name">XLB · XLU · XLY RSI趋向超卖</p>
+      <p class="watch-note">关注反弹机会，若RSI<35可布局</p>
+      <span class="watch-date">May 19, 2026</span>
+    </div>
+    <div class="watch-item">
+      <div class="watch-dot" style="background:var(--warn)"></div>
+      <p class="watch-name">XLK RSI偏高 67.3</p>
+      <p class="watch-note">领涨板块技术面偏热，谨慎追高</p>
+      <span class="watch-date">May 19, 2026</span>
+    </div></div>
+
+<hr class="div">
+<div class="sec"><span class="sec-num">③</span><span class="sec-title">Today's Strategy Recommendation</span><div class="sec-line"></div></div>
+
+<div class="strategy fade-in">
+  <div class="strategy-icon">🎯</div>
+  <div>
+    <p class="strategy-title">Today's Strategy Recommendation</p>
+    <p class="strategy-body">Continue regular investment · Cautious buying · Manage position size<br>规避超买板块: XLK<br>关注超卖反弹机会: XLB, XLU, XLY</p>
+  </div>
+</div>
+
+<hr class="div">
+<div class="sec"><span class="sec-num">④</span><span class="sec-title">Pentagon Pizza Index — OSINT Geopolitical Tension</span><div class="sec-line"></div></div>
 <div class="card fade-in">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px">
     <div>
@@ -190,18 +242,18 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
   </div>
 </div>
 
-<div class="sec"><span class="sec-num">②</span><span class="sec-title">Index Snapshot — 10-Year Trend</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑤</span><span class="sec-title">Index Snapshot — 10-Year Trend</span><div class="sec-line"></div></div>
 
 <div class="grid-2 fade-in">
   
     <div class="card" style="padding-bottom:0">
       <p class="card-name" style="color:#22d87c;font-size:16px">S&P 500</p>
       <p style="font-family:'DM Serif Display',serif;font-size:30px;margin:4px 0 2px">
-        7,367.32 <span style="font-size:16px;color:var(--dn)">▽ 0.48%</span>
+        7,364.98 <span style="font-size:16px;color:var(--dn)">▽ 0.51%</span>
       </p>
       <p class="card-sub">P/E: <strong>N/A</strong> <span class="badge b-warn">High Valuation</span></p>
       <p class="card-sub" style="margin-top:3px">
-        RSI(14): <strong class="wn">62.79</strong> <span class="badge b-warn">High</span>
+        RSI(14): <strong class="wn">62.56</strong> <span class="badge b-warn">High</span>
       </p>
       <div class="sparkline-area"><canvas id="spxChart"></canvas></div>
       <p class="sparkline-lbl">10-Year Trend (illustrative)</p>
@@ -210,47 +262,47 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
     <div class="card" style="padding-bottom:0">
       <p class="card-name" style="color:#4e9eff;font-size:16px">Nasdaq 100</p>
       <p style="font-family:'DM Serif Display',serif;font-size:30px;margin:4px 0 2px">
-        28,902.14 <span style="font-size:16px;color:var(--dn)">▽ 0.32%</span>
+        28,852.01 <span style="font-size:16px;color:var(--dn)">▽ 0.49%</span>
       </p>
       <p class="card-sub">P/E: <strong>N/A</strong> <span class="badge b-warn">High Valuation</span></p>
       <p class="card-sub" style="margin-top:3px">
-        RSI(14): <strong class="wn">66.79</strong> <span class="badge b-warn">High</span>
+        RSI(14): <strong class="wn">65.87</strong> <span class="badge b-warn">High</span>
       </p>
       <div class="sparkline-area"><canvas id="ndxChart"></canvas></div>
       <p class="sparkline-lbl">10-Year Trend (illustrative)</p>
     </div>
 </div>
 
-<div class="sec"><span class="sec-num">③</span><span class="sec-title">Sentiment &amp; Volatility Gauges</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑥</span><span class="sec-title">Sentiment &amp; Volatility Gauges</span><div class="sec-line"></div></div>
 
 <div class="grid-2 fade-in" style="gap:10px">
   <div class="card card-sm gauge">
     <p class="gauge-name">S&amp;P 500 RSI(14) <span class="badge b-warn">High</span></p>
-    <p class="gauge-val wn">62.79</p>
+    <p class="gauge-val wn">62.56</p>
     <p class="gauge-date">May 19, 2026</p>
     <div class="gbar">
       <div class="gs" style="width:30%;background:#f05252"></div>
       <div class="gs" style="width:40%;background:#2a3040"></div>
       <div class="gs" style="width:30%;background:#22d87c"></div>
     </div>
-    <div class="mwrap"><div class="mkr" style="left:62.8%"></div></div>
+    <div class="mwrap"><div class="mkr" style="left:62.6%"></div></div>
     <div class="glbls"><span>Oversold &lt;30</span><span>Neutral 30–70</span><span>Overbought &gt;70</span></div>
   </div>
   <div class="card card-sm gauge">
     <p class="gauge-name">Nasdaq 100 RSI(14) <span class="badge b-warn">High</span></p>
-    <p class="gauge-val wn">66.79</p>
+    <p class="gauge-val wn">65.87</p>
     <p class="gauge-date">May 19, 2026</p>
     <div class="gbar">
       <div class="gs" style="width:30%;background:#f05252"></div>
       <div class="gs" style="width:40%;background:#2a3040"></div>
       <div class="gs" style="width:30%;background:#22d87c"></div>
     </div>
-    <div class="mwrap"><div class="mkr" style="left:66.8%"></div></div>
+    <div class="mwrap"><div class="mkr" style="left:65.9%"></div></div>
     <div class="glbls"><span>Oversold &lt;30</span><span>Neutral 30–70</span><span>Overbought &gt;70</span></div>
   </div>
   <div class="card card-sm gauge">
     <p class="gauge-name">VIX Volatility Index <span class="badge b-neutral">Normal</span></p>
-    <p class="gauge-val wn">17.98</p>
+    <p class="gauge-val wn">18.16</p>
     <p class="gauge-date">May 19, 2026</p>
     <div class="gbar">
       <div class="gs" style="width:25%;background:#22d87c"></div>
@@ -258,12 +310,12 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
       <div class="gs" style="width:25%;background:#f07050"></div>
       <div class="gs" style="width:25%;background:#f05252"></div>
     </div>
-    <div class="mwrap"><div class="mkr" style="left:45.0%"></div></div>
+    <div class="mwrap"><div class="mkr" style="left:45.4%"></div></div>
     <div class="glbls"><span>Euphoria &lt;12</span><span>Normal 12–20</span><span>Fear 20–30</span><span>Panic &gt;30</span></div>
   </div>
   <div class="card card-sm gauge">
     <p class="gauge-name">VXN Nasdaq Volatility <span class="badge b-warn">Rising Fear</span></p>
-    <p class="gauge-val dn">24.21</p>
+    <p class="gauge-val dn">24.65</p>
     <p class="gauge-date">May 19, 2026</p>
     <div class="gbar">
       <div class="gs" style="width:25%;background:#22d87c"></div>
@@ -271,7 +323,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
       <div class="gs" style="width:25%;background:#f07050"></div>
       <div class="gs" style="width:25%;background:#f05252"></div>
     </div>
-    <div class="mwrap"><div class="mkr" style="left:60.5%"></div></div>
+    <div class="mwrap"><div class="mkr" style="left:61.6%"></div></div>
     <div class="glbls"><span>Euphoria &lt;12</span><span>Normal 12–20</span><span>Fear 20–30</span><span>Panic &gt;30</span></div>
   </div>
 </div>
@@ -309,12 +361,12 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
   </div>
   <div class="card card-sm gauge">
     <p class="gauge-name">CME FedWatch — Implied Rate <span class="badge b-neutral">Futures</span></p>
-    <p class="gauge-val nt">3.625%</p>
+    <p class="gauge-val nt">3.620%</p>
     <p class="gauge-date">May 19, 2026</p>
     <div class="gbar">
       <div class="gs" style="width:100%;background:#f05252"></div>
     </div>
-    <div class="mwrap"><div class="mkr" style="left:60.4%"></div></div>
+    <div class="mwrap"><div class="mkr" style="left:60.3%"></div></div>
     <div class="glbls"><span>0% 无降息</span><span>1次降息</span><span>2次+</span></div>
   </div>
 </div>
@@ -440,7 +492,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
 </div>
 
 <hr class="div">
-<div class="sec"><span class="sec-num">⑨</span><span class="sec-title">S&P 500 Sector Performance — GICS 10 Sectors YTD</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑪</span><span class="sec-title">S&P 500 Sector Performance — GICS 10 Sectors YTD</span><div class="sec-line"></div></div>
 
 <div class="card fade-in" style="margin-bottom:12px">
   <div class="chart-wrap chart-wrap-md"><canvas id="sectorChart"></canvas></div>
@@ -459,11 +511,11 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <td><strong>XLE</strong></td>
           <td style="color:var(--text2)">能源</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            $60.50</td>
+            $60.40</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            +33.4%</td>
+            +33.2%</td>
           <td><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#22d87c;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:wn;font-weight:500">62.9</td>
+          <td style="font-family:'DM Mono',monospace;color:wn;font-weight:500">62.3</td>
           <td><span class="pill b-up">Leading</span></td>
           <td style="font-size:10px;color:var(--text2)">RSI偏高，谨慎追涨</td>
         </tr>
@@ -471,7 +523,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <td><strong>XLK</strong></td>
           <td style="color:var(--text2)">信息技术</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            $173.94</td>
+            $173.95</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
             +20.7%</td>
           <td><div class="bar-bg"><div class="bar-fill" style="width:83%;background:#22d87c;"></div></div></td>
@@ -483,11 +535,11 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <td><strong>XLP</strong></td>
           <td style="color:var(--text2)">必需消费</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            $85.53</td>
+            $85.82</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            +10.7%</td>
-          <td><div class="bar-bg"><div class="bar-fill" style="width:43%;background:#22d87c;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:wn;font-weight:500">61.0</td>
+            +11.1%</td>
+          <td><div class="bar-bg"><div class="bar-fill" style="width:44%;background:#22d87c;"></div></div></td>
+          <td style="font-family:'DM Mono',monospace;color:wn;font-weight:500">63.3</td>
           <td><span class="pill b-up">Leading</span></td>
           <td style="font-size:10px;color:var(--text2)">RSI偏高，谨慎追涨</td>
         </tr>
@@ -495,11 +547,11 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <td><strong>XLI</strong></td>
           <td style="color:var(--text2)">工业</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            $168.77</td>
+            $168.81</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            +7.1%</td>
+            +7.2%</td>
           <td><div class="bar-bg"><div class="bar-fill" style="width:29%;background:#22d87c;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">43.4</td>
+          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">43.5</td>
           <td><span class="pill b-warn">Weakening</span></td>
           <td style="font-size:10px;color:var(--text2)">中性区间</td>
         </tr>
@@ -507,11 +559,11 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <td><strong>XLB</strong></td>
           <td style="color:var(--text2)">材料</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            $49.12</td>
+            $49.08</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            +7.0%</td>
+            +6.9%</td>
           <td><div class="bar-bg"><div class="bar-fill" style="width:28%;background:#22d87c;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:in;font-weight:500">34.6</td>
+          <td style="font-family:'DM Mono',monospace;color:in;font-weight:500">34.4</td>
           <td><span class="pill b-warn">Weakening</span></td>
           <td style="font-size:10px;color:var(--text2)">RSI偏低，趋向超卖</td>
         </tr>
@@ -519,59 +571,59 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <td><strong>XLU</strong></td>
           <td style="color:var(--text2)">公用事业</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            $43.72</td>
+            $43.79</td>
           <td style="text-align:right;color:var(--up);font-weight:600">
-            +2.0%</td>
+            +2.1%</td>
           <td><div class="bar-bg"><div class="bar-fill" style="width:8%;background:#22d87c;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:in;font-weight:500">33.9</td>
+          <td style="font-family:'DM Mono',monospace;color:in;font-weight:500">34.4</td>
           <td><span class="pill b-warn">Weakening</span></td>
           <td style="font-size:10px;color:var(--text2)">RSI偏低，趋向超卖</td>
         </tr>
         <tr>
           <td><strong>XLC</strong></td>
           <td style="color:var(--text2)">通信</td>
-          <td style="text-align:right;color:var(--dn);font-weight:600">
-            $116.48</td>
-          <td style="text-align:right;color:var(--dn);font-weight:600">
-            -0.0%</td>
-          <td><div class="bar-bg"><div class="bar-fill" style="width:0%;background:#f05252;right:0;left:auto;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">51.8</td>
-          <td><span class="pill b-warn">Weakening</span></td>
+          <td style="text-align:right;color:var(--up);font-weight:600">
+            $116.67</td>
+          <td style="text-align:right;color:var(--up);font-weight:600">
+            +0.1%</td>
+          <td><div class="bar-bg"><div class="bar-fill" style="width:0%;background:#22d87c;"></div></div></td>
+          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">52.8</td>
+          <td><span class="pill b-info">Improving</span></td>
           <td style="font-size:10px;color:var(--text2)">中性区间</td>
         </tr>
         <tr>
           <td><strong>XLY</strong></td>
           <td style="color:var(--text2)">非必需消费</td>
           <td style="text-align:right;color:var(--dn);font-weight:600">
-            $114.57</td>
+            $114.85</td>
           <td style="text-align:right;color:var(--dn);font-weight:600">
-            -3.0%</td>
-          <td><div class="bar-bg"><div class="bar-fill" style="width:12%;background:#f05252;right:0;left:auto;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">40.2</td>
+            -2.8%</td>
+          <td><div class="bar-bg"><div class="bar-fill" style="width:11%;background:#f05252;right:0;left:auto;"></div></div></td>
+          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">41.0</td>
           <td><span class="pill b-dn">Lagging</span></td>
-          <td style="font-size:10px;color:var(--text2)">中性区间</td>
-        </tr>
-        <tr>
-          <td><strong>XLF</strong></td>
-          <td style="color:var(--text2)">金融</td>
-          <td style="text-align:right;color:var(--dn);font-weight:600">
-            $51.48</td>
-          <td style="text-align:right;color:var(--dn);font-weight:600">
-            -5.8%</td>
-          <td><div class="bar-bg"><div class="bar-fill" style="width:23%;background:#f05252;right:0;left:auto;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">51.1</td>
-          <td><span class="pill b-warn">Weakening</span></td>
           <td style="font-size:10px;color:var(--text2)">中性区间</td>
         </tr>
         <tr>
           <td><strong>XLV</strong></td>
           <td style="color:var(--text2)">医疗</td>
           <td style="text-align:right;color:var(--dn);font-weight:600">
-            $145.77</td>
+            $146.66</td>
           <td style="text-align:right;color:var(--dn);font-weight:600">
-            -5.9%</td>
-          <td><div class="bar-bg"><div class="bar-fill" style="width:23%;background:#f05252;right:0;left:auto;"></div></div></td>
-          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">49.6</td>
+            -5.3%</td>
+          <td><div class="bar-bg"><div class="bar-fill" style="width:21%;background:#f05252;right:0;left:auto;"></div></div></td>
+          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">52.8</td>
+          <td><span class="pill b-warn">Weakening</span></td>
+          <td style="font-size:10px;color:var(--text2)">中性区间</td>
+        </tr>
+        <tr>
+          <td><strong>XLF</strong></td>
+          <td style="color:var(--text2)">金融</td>
+          <td style="text-align:right;color:var(--dn);font-weight:600">
+            $51.58</td>
+          <td style="text-align:right;color:var(--dn);font-weight:600">
+            -5.6%</td>
+          <td><div class="bar-bg"><div class="bar-fill" style="width:22%;background:#f05252;right:0;left:auto;"></div></div></td>
+          <td style="font-family:'DM Mono',monospace;color:nt;font-weight:500">52.3</td>
           <td><span class="pill b-warn">Weakening</span></td>
           <td style="font-size:10px;color:var(--text2)">中性区间</td>
         </tr></tbody>
@@ -579,9 +631,9 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
 </div>
 <script>
 (function(){
-  const sLabels=["XLE \u80fd\u6e90", "XLK \u4fe1\u606f\u6280\u672f", "XLP \u5fc5\u9700\u6d88\u8d39", "XLI \u5de5\u4e1a", "XLB \u6750\u6599", "XLU \u516c\u7528\u4e8b\u4e1a", "XLC \u901a\u4fe1", "XLY \u975e\u5fc5\u9700\u6d88\u8d39", "XLF \u91d1\u878d", "XLV \u533b\u7597"];
-  const sYtd=[33.4, 20.69, 10.71, 7.13, 6.99, 1.97, -0.04, -3.0, -5.8, -5.86];
-  const sColors=["#22d87c", "#22d87c", "#22d87c", "#22d87c", "#22d87c", "#22d87c", "#f05252", "#f05252", "#f05252", "#f05252"];
+  const sLabels=["XLE \u80fd\u6e90", "XLK \u4fe1\u606f\u6280\u672f", "XLP \u5fc5\u9700\u6d88\u8d39", "XLI \u5de5\u4e1a", "XLB \u6750\u6599", "XLU \u516c\u7528\u4e8b\u4e1a", "XLC \u901a\u4fe1", "XLY \u975e\u5fc5\u9700\u6d88\u8d39", "XLV \u533b\u7597", "XLF \u91d1\u878d"];
+  const sYtd=[33.18, 20.69, 11.09, 7.16, 6.89, 2.12, 0.12, -2.76, -5.3, -5.62];
+  const sColors=["#22d87c", "#22d87c", "#22d87c", "#22d87c", "#22d87c", "#22d87c", "#22d87c", "#f05252", "#f05252", "#f05252"];
   new Chart(document.getElementById('sectorChart'),{
     type:'bar',
     data:{labels:sLabels,datasets:[{label:'YTD %',data:sYtd,backgroundColor:sColors,borderRadius:5,borderSkipped:false}]},
@@ -598,8 +650,8 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
     }}]
   });
   // RSI chart
-  const rLabels=["XLE \u80fd\u6e90", "XLK \u4fe1\u606f\u6280\u672f", "XLP \u5fc5\u9700\u6d88\u8d39", "XLI \u5de5\u4e1a", "XLB \u6750\u6599", "XLU \u516c\u7528\u4e8b\u4e1a", "XLC \u901a\u4fe1", "XLY \u975e\u5fc5\u9700\u6d88\u8d39", "XLF \u91d1\u878d", "XLV \u533b\u7597"];
-  const rVals=[62.94, 67.27, 61.04, 43.4, 34.6, 33.93, 51.84, 40.16, 51.13, 49.65];
+  const rLabels=["XLE \u80fd\u6e90", "XLK \u4fe1\u606f\u6280\u672f", "XLP \u5fc5\u9700\u6d88\u8d39", "XLI \u5de5\u4e1a", "XLB \u6750\u6599", "XLU \u516c\u7528\u4e8b\u4e1a", "XLC \u901a\u4fe1", "XLY \u975e\u5fc5\u9700\u6d88\u8d39", "XLV \u533b\u7597", "XLF \u91d1\u878d"];
+  const rVals=[62.32, 67.28, 63.34, 43.46, 34.38, 34.35, 52.77, 41.02, 52.75, 52.31];
   const rColors=["#f5a623", "#f5a623", "#f5a623", "#556677", "#4e9eff", "#4e9eff", "#556677", "#556677", "#556677", "#556677"];
   new Chart(document.getElementById('rsiChart'),{
     type:'bar',
@@ -621,14 +673,14 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
 })();
 </script>
 
-<div class="sec"><span class="sec-num">⑨-B</span><span class="sec-title">Semiconductor Special Focus — 半导体专题</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑪-B</span><span class="sec-title">Semiconductor Special Focus — 半导体专题</span><div class="sec-line"></div></div>
 
 <div class="grid-2 fade-in">
   <div class="semi-card">
     <p style="font-size:14px;font-weight:600;color:var(--info);margin-bottom:3px">SOX · Philadelphia Semiconductor Index</p>
     <p style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:8px">May 19, 2026</p>
-    <p style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:4px">11,237</p>
-    <p style="font-size:12px;color:var(--up);font-weight:500;margin-bottom:3px">RSI: 59.1 <span class="badge b-neutral">Neutral</span></p>
+    <p style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:4px">11,177</p>
+    <p style="font-size:12px;color:var(--up);font-weight:500;margin-bottom:3px">RSI: 58.1 <span class="badge b-neutral">Neutral</span></p>
     
     <div class="rsi-gauge">
       <span class="rsi-lbl">RSI</span>
@@ -639,11 +691,11 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <div class="gs" style="width:30%;background:#22d87c"></div>
         </div>
         <div class="rsi-pin-wrap">
-          <div class="rsi-pin" style="left:59.1%"></div>
+          <div class="rsi-pin" style="left:58.1%"></div>
         </div>
         <div class="rsi-ends"><span>0</span><span>30</span><span>70</span><span>100</span></div>
       </div>
-      <span class="rsi-val" style="color:#8b909e">59.1</span>
+      <span class="rsi-val" style="color:#8b909e">58.1</span>
     </div>
     <div class="semi-spark"><canvas id="soxChart"></canvas></div>
     <p class="semi-spark-lbl">12-Month Trend (illustrative)</p>
@@ -651,9 +703,9 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
   <div class="semi-card">
     <p style="font-size:14px;font-weight:600;color:var(--info);margin-bottom:3px">SOXX · iShares PHLX Semiconductor ETF</p>
     <p style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:8px">May 19, 2026</p>
-    <p style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:4px">$493.20</p>
+    <p style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:4px">$490.71</p>
     <p style="font-size:12px;color:var(--up);font-weight:500;margin-bottom:3px">
-      YTD: +57.3% &nbsp;·&nbsp;
+      YTD: +56.5% &nbsp;·&nbsp;
       52W: $199.93 – $533.74
     </p>
     
@@ -666,11 +718,11 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <div class="gs" style="width:30%;background:#22d87c"></div>
         </div>
         <div class="rsi-pin-wrap">
-          <div class="rsi-pin" style="left:59.0%"></div>
+          <div class="rsi-pin" style="left:58.1%"></div>
         </div>
         <div class="rsi-ends"><span>0</span><span>30</span><span>70</span><span>100</span></div>
       </div>
-      <span class="rsi-val" style="color:#8b909e">59.0</span>
+      <span class="rsi-val" style="color:#8b909e">58.1</span>
     </div>
     <div class="semi-detail">
       <span style="color:var(--text)">核心驱动:</span> AI算力需求 · NVDA/AVGO/TSM主导 · 数据中心资本开支<br>
@@ -682,18 +734,18 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
 </div>
 
 <hr class="div">
-<div class="sec"><span class="sec-num">⑩</span><span class="sec-title">Sector RSI Summary — 超买 / 超卖排名</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑫</span><span class="sec-title">Sector RSI Summary — 超买 / 超卖排名</span><div class="sec-line"></div></div>
 <div class="card fade-in"><div class="chart-wrap chart-wrap-rsi"><canvas id="rsiChart"></canvas></div></div>
 
 <hr class="div">
-<div class="sec"><span class="sec-num">⑪</span><span class="sec-title">Commodities — 黄金·白银·稀土·煤炭·棉花·大豆</span><div class="sec-line"></div></div>
+<div class="sec"><span class="sec-num">⑬</span><span class="sec-title">Commodities — 黄金·白银·稀土·煤炭·棉花·大豆</span><div class="sec-line"></div></div>
 <div class="grid-3 fade-in">
   <div class="com-card">
     <p class="com-icon">🥇</p>
     <p class="com-name">黄金 Gold</p>
     <p class="com-unit">GC=F · USD/oz</p>
-    <p class="com-price up">$4,483.30</p>
-    <p class="com-ytd up">YTD +3.9% <span class="badge b-up">涨</span></p>
+    <p class="com-price up">$4,477.00</p>
+    <p class="com-ytd up">YTD +3.8% <span class="badge b-up">涨</span></p>
     <div class="rsi-gauge">
       <span class="rsi-lbl">RSI</span>
       <div class="rsi-body">
@@ -702,10 +754,10 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <div class="gs" style="width:40%;background:#2a3040"></div>
           <div class="gs" style="width:30%;background:#22d87c"></div>
         </div>
-        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:37.0%"></div></div>
+        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:36.6%"></div></div>
         <div class="rsi-ends"><span>0</span><span>30</span><span>70</span><span>100</span></div>
       </div>
-      <span class="rsi-val" style="color:#4e9eff">37.0</span>
+      <span class="rsi-val" style="color:#4e9eff">36.6</span>
     </div>
     <p class="com-key">RSI偏低，趋向超卖 · 52周波动显著 · May 19, 2026</p>
     <div class="com-spark"><canvas id="com_GC_F"></canvas></div>
@@ -715,7 +767,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
     <p class="com-icon">🥈</p>
     <p class="com-name">白银 Silver</p>
     <p class="com-unit">SI=F · USD/oz</p>
-    <p class="com-price up">$73.57</p>
+    <p class="com-price up">$73.60</p>
     <p class="com-ytd up">YTD +4.3% <span class="badge b-up">涨</span></p>
     <div class="rsi-gauge">
       <span class="rsi-lbl">RSI</span>
@@ -738,8 +790,8 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
     <p class="com-icon">⚗️</p>
     <p class="com-name">稀土 Rare Earth</p>
     <p class="com-unit">REMX · USD (ETF)</p>
-    <p class="com-price up">$91.78</p>
-    <p class="com-ytd up">YTD +19.5% <span class="badge b-up">涨</span></p>
+    <p class="com-price up">$91.33</p>
+    <p class="com-ytd up">YTD +18.9% <span class="badge b-up">涨</span></p>
     <div class="rsi-gauge">
       <span class="rsi-lbl">RSI</span>
       <div class="rsi-body">
@@ -748,10 +800,10 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <div class="gs" style="width:40%;background:#2a3040"></div>
           <div class="gs" style="width:30%;background:#22d87c"></div>
         </div>
-        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:38.3%"></div></div>
+        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:37.9%"></div></div>
         <div class="rsi-ends"><span>0</span><span>30</span><span>70</span><span>100</span></div>
       </div>
-      <span class="rsi-val" style="color:#4e9eff">38.3</span>
+      <span class="rsi-val" style="color:#4e9eff">37.9</span>
     </div>
     <p class="com-key">RSI偏低，趋向超卖 · 52周波动显著 · May 19, 2026</p>
     <div class="com-spark"><canvas id="com_REMX"></canvas></div>
@@ -761,7 +813,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
     <p class="com-icon">⚫</p>
     <p class="com-name">煤炭 Thermal Coal</p>
     <p class="com-unit">BTU · USD/share (BTU)</p>
-    <p class="com-price dn">$23.62</p>
+    <p class="com-price dn">$23.64</p>
     <p class="com-ytd dn">YTD -22.8% <span class="badge b-dn">跌</span></p>
     <div class="rsi-gauge">
       <span class="rsi-lbl">RSI</span>
@@ -771,10 +823,10 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <div class="gs" style="width:40%;background:#2a3040"></div>
           <div class="gs" style="width:30%;background:#22d87c"></div>
         </div>
-        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:32.7%"></div></div>
+        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:32.8%"></div></div>
         <div class="rsi-ends"><span>0</span><span>30</span><span>70</span><span>100</span></div>
       </div>
-      <span class="rsi-val" style="color:#4e9eff">32.7</span>
+      <span class="rsi-val" style="color:#4e9eff">32.8</span>
     </div>
     <p class="com-key">RSI偏低，趋向超卖 · 52周波动显著 · May 19, 2026</p>
     <div class="com-spark"><canvas id="com_BTU"></canvas></div>
@@ -807,8 +859,8 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
     <p class="com-icon">🫘</p>
     <p class="com-name">大豆 Soybeans</p>
     <p class="com-unit">ZS=F · USD/bu</p>
-    <p class="com-price up">$12.16</p>
-    <p class="com-ytd up">YTD +18.1% <span class="badge b-up">涨</span></p>
+    <p class="com-price up">$12.18</p>
+    <p class="com-ytd up">YTD +18.3% <span class="badge b-up">涨</span></p>
     <div class="rsi-gauge">
       <span class="rsi-lbl">RSI</span>
       <div class="rsi-body">
@@ -817,88 +869,21 @@ hr.div{border:none;border-top:1px solid var(--border);margin:28px 0}
           <div class="gs" style="width:40%;background:#2a3040"></div>
           <div class="gs" style="width:30%;background:#22d87c"></div>
         </div>
-        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:60.2%"></div></div>
+        <div class="rsi-pin-wrap"><div class="rsi-pin" style="left:60.8%"></div></div>
         <div class="rsi-ends"><span>0</span><span>30</span><span>70</span><span>100</span></div>
       </div>
-      <span class="rsi-val" style="color:#f5a623">60.2</span>
+      <span class="rsi-val" style="color:#f5a623">60.8</span>
     </div>
     <p class="com-key">RSI偏高，谨慎追涨 · 52周波动显著 · May 19, 2026</p>
     <div class="com-spark"><canvas id="com_ZS_F"></canvas></div>
     <p class="com-spark-lbl">12-Month Trend</p>
   </div></div><script>(function(){
-    sparkline('com_GC_F', [3181.4, 3386.6, 3401.9, 3336.9, 3732.1, 4001.9, 4239.3, 4436.9, 4951.2, 5115.8, 4800.0, 4483.3], '#22d87c', 'rgba(34,216,124,0.12)');
-    sparkline('com_SI_F', [32.23, 37.09, 39.1, 38.03, 43.78, 46.56, 58.42, 76.16, 76.74, 84.67, 79.49, 73.57], '#22d87c', 'rgba(34,216,124,0.12)');
-    sparkline('com_REMX', [39.06, 39.49, 52.23, 57.82, 65.77, 67.17, 71.94, 79.71, 86.63, 93.81, 97.44, 91.78], '#22d87c', 'rgba(34,216,124,0.12)');
-    sparkline('com_BTU', [14.48, 13.95, 17.19, 16.43, 24.42, 27.34, 26.69, 30.55, 36.84, 35.93, 28.03, 23.62], '#f05252', 'rgba(240,82,82,0.1)');
+    sparkline('com_GC_F', [3181.4, 3386.6, 3401.9, 3336.9, 3732.1, 4001.9, 4239.3, 4436.9, 4951.2, 5115.8, 4800.0, 4477.0], '#22d87c', 'rgba(34,216,124,0.12)');
+    sparkline('com_SI_F', [32.23, 37.09, 39.1, 38.03, 43.78, 46.56, 58.42, 76.16, 76.74, 84.67, 79.49, 73.6], '#22d87c', 'rgba(34,216,124,0.12)');
+    sparkline('com_REMX', [39.06, 39.49, 52.23, 57.82, 65.77, 67.17, 71.94, 79.71, 86.63, 93.81, 97.44, 91.33], '#22d87c', 'rgba(34,216,124,0.12)');
+    sparkline('com_BTU', [14.48, 13.95, 17.19, 16.43, 24.42, 27.34, 26.69, 30.55, 36.84, 35.93, 28.03, 23.64], '#f05252', 'rgba(240,82,82,0.1)');
     sparkline('com_CT_F', [65.48, 65.05, 66.54, 65.89, 64.04, 64.56, 62.83, 64.65, 61.06, 65.14, 75.11, 82.65], '#22d87c', 'rgba(34,216,124,0.12)');
-    sparkline('com_ZS_F', [10.67, 10.74, 10.1, 10.37, 10.12, 10.78, 11.28, 10.47, 11.15, 12.13, 11.67, 12.16], '#22d87c', 'rgba(34,216,124,0.12)');})();</script>
-
-<hr class="div">
-<div class="sec"><span class="sec-num">⑫</span><span class="sec-title">Priority Watchlist &amp; Strategy</span><div class="sec-line"></div></div>
-
-<div class="card fade-in">
-    <div class="watch-item">
-      <div class="watch-dot" style="background:var(--up)"></div>
-      <p class="watch-name">PizzINT DOUGHCON 5</p>
-      <p class="watch-note">五角大楼活动正常，短期升级风险可控</p>
-      <span class="watch-date">May 19, 2026</span>
-    </div>
-    <div class="watch-item">
-      <div class="watch-dot" style="background:var(--warn)"></div>
-      <p class="watch-name">CPI 2.4% 高于目标</p>
-      <p class="watch-note">通胀高于2%目标，Fed仍需谨慎</p>
-      <span class="watch-date">May 19, 2026</span>
-    </div>
-    <div class="watch-item">
-      <div class="watch-dot" style="background:var(--dn)"></div>
-      <p class="watch-name">10Y国债收益率 4.46%</p>
-      <p class="watch-note">高利率持续压制成长股和高P/E板块估值</p>
-      <span class="watch-date">May 19, 2026</span>
-    </div>
-    <div class="watch-item">
-      <div class="watch-dot" style="background:var(--info)"></div>
-      <p class="watch-name">XLB · XLU · XLY RSI趋向超卖</p>
-      <p class="watch-note">关注反弹机会，若RSI<35可布局</p>
-      <span class="watch-date">May 19, 2026</span>
-    </div>
-    <div class="watch-item">
-      <div class="watch-dot" style="background:var(--warn)"></div>
-      <p class="watch-name">XLK RSI偏高 67.3</p>
-      <p class="watch-note">领涨板块技术面偏热，谨慎追高</p>
-      <span class="watch-date">May 19, 2026</span>
-    </div></div>
-<div style="margin-top:20px">
-  <div class="strategy fade-in">
-    <div class="strategy-icon">🎯</div>
-    <div>
-      <p class="strategy-title">Today's Strategy Recommendation</p>
-      <p class="strategy-body">Continue regular investment · Cautious buying · Manage position size<br>规避超买板块: XLK<br>关注超卖反弹机会: XLB, XLU, XLY</p>
-    </div>
-  </div>
-</div>
-
-<hr class="div">
-<div class="sec"><span class="sec-num">⑬</span><span class="sec-title">AI 市场情报解读 — Powered by DeepSeek</span><div class="sec-line"></div></div>
-
-<div class="card fade-in" style="background:linear-gradient(135deg,rgba(200,169,110,0.06),rgba(200,169,110,0.02));
-     border:1px solid rgba(200,169,110,0.2);">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:20px">🤖</span>
-      <div>
-        <p style="font-size:13px;font-weight:600;color:var(--accent)">AI 市场情报解读</p>
-        <p style="font-size:9px;font-family:'DM Mono',monospace;color:var(--text3)">
-          Powered by deepseek-chat &nbsp;·&nbsp; 1181 tokens
-        </p>
-      </div>
-    </div>
-    <span class="badge b-accent">DeepSeek</span>
-  </div>
-  <p style="font-size:13px;color:#c8c0a8;line-height:1.8">①美股技术面：标普500与纳指100 RSI分别位于62.79和66.79，处于中性偏强区间，但VIX（17.98）与CNN恐惧贪婪指数（25，极度恐惧）出现显著背离，暗示市场情绪脆弱，科技板块（XLK）RSI 67.3接近超买，而消费可选（XLY）RSI 40.2已进入弱势区，板块轮动加剧。</p><p style='margin-top:10px;font-size:13px;color:#c8c0a8;line-height:1.8'>②宏观环境：ISM制造业PMI（52.0）与服务业PMI（56.7）双双破线扩张，但核心CPI（2.47%）仍高于美联储目标，10年期美债收益率（4.46%）高企压制风险偏好，美元指数（118.47）持续走强，非农就业（+0K）异常疲软，暗示经济放缓信号。</p><p style='margin-top:10px;font-size:13px;color:#c8c0a8;line-height:1.8'>③A股关键信号：上证指数RSI 57.9温和反弹，但北向资金净流入仅12.66亿元，规模偏小；非制造业PMI（49.4）跌破荣枯线，制造业PMI（50.3）微降，茅台RSI 28.6进入超卖区域，消费龙头承压。</p><p style='margin-top:10px;font-size:13px;color:#c8c0a8;line-height:1.8'>④综合风险提示：美股恐惧情绪与宏观数据分化形成高波动陷阱，A股北向资金流入乏力叠加PMI边际走弱，需警惕外部流动性收紧与国内经济复苏动能衰减的共振风险。</p><p style='margin-top:10px;font-size:13px;color:#c8c0a8;line-height:1.8'>⑤本周策略建议：美股建议降低科技仓位，增配能源（XLE）与防御性消费（XLP）对冲；A股关注超跌消费龙头（如茅台）的左侧机会，但需等待北向资金放量确认，整体维持低仓位防御。</p>
-  <p style="font-size:9px;color:var(--text3);margin-top:12px;font-family:'DM Mono',monospace">
-    ⚠️ AI 生成内容仅供参考，不构成投资建议。模型可能存在幻觉，请结合原始数据独立判断。
-  </p>
-</div>
+    sparkline('com_ZS_F', [10.67, 10.74, 10.1, 10.37, 10.12, 10.78, 11.28, 10.47, 11.15, 12.13, 11.67, 12.18], '#22d87c', 'rgba(34,216,124,0.12)');})();</script>
 
 
 <div style="background:linear-gradient(135deg,rgba(220,38,38,0.1),rgba(220,38,38,0.03));
@@ -1276,7 +1261,7 @@ sparkline('cn_000688_SS',[],'#b06aff','rgba(176,106,255,0.12)');})();</script>
 <footer class="page-footer">
   <p>DATA SOURCES: yfinance · FRED (Federal Reserve) · alternative.me · pizzint.watch · CBOE · BLS · ISM · CME · SSE · SZSE</p>
   <p>RSI及技术指标由实时数据计算 · 大宗商品趋势图基于实际价格数据 · 本报告为自动生成，仅供信息参考，不构成任何投资建议</p>
-  <p style="margin-top:6px;color:rgba(255,255,255,0.15)">Auto-generated · May 19, 2026 — 13:40 UTC</p>
+  <p style="margin-top:6px;color:rgba(255,255,255,0.15)">Auto-generated · May 19, 2026 — 13:50 UTC</p>
 </footer>
 <script>
 Chart.defaults.color='rgba(255,255,255,0.45)';
@@ -1290,10 +1275,10 @@ function sparkline(id,data,color,fill){
       scales:{x:{display:false},y:{display:false}}}
   });
 }
-sparkline('spxChart',[2040.04, 2151.33, 2362.72, 2465.54, 2662.94, 2801.83, 2467.7, 2803.27, 3085.18, 2799.55, 3281.06, 3811.15, 4402.66, 4677.03, 3789.99, 3965.34, 4167.87, 4258.19, 5165.31, 5608.25, 6067.7, 6229.98, 6840.51, 7366.93],'#22d87c','rgba(34,216,124,0.12)');
-sparkline('ndxChart',[4315.58, 4909.97, 5436.23, 5951.13, 6553.86, 7350.23, 6262.77, 7166.75, 8219.65, 8757.83, 10980.22, 12909.44, 15083.39, 15592.19, 11593.77, 11677.02, 13231.47, 14723.22, 18068.47, 19766.49, 21463.04, 22685.57, 25668.69, 28902.14],'#4e9eff','rgba(78,158,255,0.12)');
-sparkline('soxChart',[4960.73, 5223.65, 5638.71, 5754.46, 6284.67, 7194.71, 7020.53, 7446.45, 8048.62, 7643.17, 9239.29, 11236.58],'#4e9eff','rgba(78,158,255,0.12)');
-sparkline('soxxChart',[213.43, 224.7, 242.52, 248.05, 267.68, 303.82, 296.3, 317.86, 348.3, 329.99, 401.86, 493.2],'#4e9eff','rgba(78,158,255,0.12)');
+sparkline('spxChart',[2040.04, 2151.33, 2362.72, 2465.54, 2662.94, 2801.83, 2467.7, 2803.27, 3085.18, 2799.55, 3281.06, 3811.15, 4402.66, 4677.03, 3789.99, 3965.34, 4167.87, 4258.19, 5165.31, 5608.25, 6067.7, 6229.98, 6840.51, 7364.47],'#22d87c','rgba(34,216,124,0.12)');
+sparkline('ndxChart',[4315.58, 4909.97, 5436.23, 5951.13, 6553.86, 7350.23, 6262.77, 7166.75, 8219.65, 8757.83, 10980.22, 12909.44, 15083.39, 15592.19, 11593.77, 11677.02, 13231.47, 14723.22, 18068.47, 19766.49, 21463.04, 22685.57, 25668.69, 28852.01],'#4e9eff','rgba(78,158,255,0.12)');
+sparkline('soxChart',[4960.73, 5223.65, 5638.71, 5754.46, 6284.67, 7194.71, 7020.53, 7446.45, 8048.62, 7643.17, 9239.29, 11177.28],'#4e9eff','rgba(78,158,255,0.12)');
+sparkline('soxxChart',[213.43, 224.7, 242.52, 248.05, 267.68, 303.82, 296.3, 317.86, 348.3, 329.99, 401.86, 490.71],'#4e9eff','rgba(78,158,255,0.12)');
 </script>
 </body>
 </html>
