@@ -78,28 +78,54 @@ def twelve_month_trend(hist: pd.DataFrame, n_points: int = 12) -> list[float]:
 
 
 def fred(series_id: str, limit: int = 3) -> tuple[float | None, str | None]:
-    """Fetch latest value from FRED."""
-    if not FRED_API_KEY:
-        return None, None
-    url = "https://api.stlouisfed.org/fred/series/observations"
-    params = {
-        "series_id": series_id,
-        "api_key": FRED_API_KEY,
-        "file_type": "json",
-        "limit": limit,
-        "sort_order": "desc",
-        "observation_start": ONE_YEAR_AGO,
-    }
+    """
+    Fetch latest value from FRED.
+
+    Strategy (in order):
+      1. FRED JSON API  — fastest, requires FRED_API_KEY env var (free registration)
+      2. FRED public CSV — no API key needed; same data, slightly slower
+         URL: https://fred.stlouisfed.org/graph/fredgraph.csv?id=SERIES_ID
+    """
+    # ── Path 1: API key ──────────────────────────────────────────────
+    if FRED_API_KEY:
+        url = "https://api.stlouisfed.org/fred/series/observations"
+        params = {
+            "series_id": series_id,
+            "api_key": FRED_API_KEY,
+            "file_type": "json",
+            "limit": limit,
+            "sort_order": "desc",
+            "observation_start": ONE_YEAR_AGO,
+        }
+        try:
+            r = requests.get(url, params=params, timeout=12)
+            obs = r.json().get("observations", [])
+            for o in obs:
+                try:
+                    return round(float(o["value"]), 4), o["date"]
+                except (ValueError, KeyError):
+                    continue
+        except Exception as e:
+            log.warning(f"FRED API {series_id}: {e}")
+
+    # ── Path 2: Public CSV (no key needed) ───────────────────────────
     try:
-        r = requests.get(url, params=params, timeout=12)
-        obs = r.json().get("observations", [])
-        for o in obs:
-            try:
-                return round(float(o["value"]), 4), o["date"]
-            except (ValueError, KeyError):
-                continue
+        csv_url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+        r = requests.get(csv_url, timeout=15,
+                         headers={"User-Agent": "Mozilla/5.0 (compatible; MarketBot/1.0)"})
+        if r.status_code == 200:
+            lines = [l for l in r.text.strip().splitlines() if l and not l.startswith("DATE")]
+            # Build list of valid (date, value) pairs, oldest-first
+            valid = [(parts[0], parts[1]) for l in lines
+                     if len(parts := l.split(",")) == 2 and parts[1] not in (".", "")]
+            if valid:
+                # limit=1 → most recent; limit=N → Nth-most-recent (for YoY/delta calcs)
+                idx = max(0, len(valid) - limit)
+                date_str, val_str = valid[idx]
+                return round(float(val_str), 4), date_str
     except Exception as e:
-        log.warning(f"FRED {series_id}: {e}")
+        log.warning(f"FRED CSV {series_id}: {e}")
+
     return None, None
 
 
@@ -179,6 +205,30 @@ def fetch_macro() -> dict:
     core_yoy = round((core_cpi - core_hist) / core_hist * 100, 2) if core_cpi and core_hist else None
     # PAYEMS monthly change: level in thousands, limit=3 gets ~2 months prior
     nfp_change = round(nfp - nfp_prev) if nfp and nfp_prev else None  # already in K
+
+    # ── akshare fallback for ISM PMI (when FRED NAPM/NMFCI unavailable) ──
+    if ism_mfg is None:
+        try:
+            import akshare as ak
+            df_ism = ak.macro_usa_ism_pmi()
+            if df_ism is not None and not df_ism.empty:
+                # akshare returns newest-first; col0=date, col2=actual value
+                latest = df_ism.iloc[0]
+                ism_mfg      = float(latest.iloc[2]) if latest.iloc[2] not in ("", None) else None
+                ism_mfg_date = str(latest.iloc[1])[:10]
+        except Exception as e:
+            log.warning(f"akshare ISM mfg fallback: {e}")
+
+    if ism_svc is None:
+        try:
+            import akshare as ak
+            df_svc = ak.macro_usa_ism_non_pmi()
+            if df_svc is not None and not df_svc.empty:
+                latest = df_svc.iloc[0]
+                ism_svc      = float(latest.iloc[2]) if latest.iloc[2] not in ("", None) else None
+                ism_svc_date = str(latest.iloc[1])[:10]
+        except Exception as e:
+            log.warning(f"akshare ISM svc fallback: {e}")
 
     # ── yfinance fallback for market-priced data ───────────────────
     # 10-Year Treasury yield via ^TNX (CBOE index, value = yield %)
