@@ -90,24 +90,45 @@ def send(html_path: str, report_date: str = "") -> bool:
     all_recipients = to_list + cc_list
 
     # ── Send via Gmail SMTP ─────────────────────────────────────────
-    try:
-        log.info(f"Sending report to: {', '.join(all_recipients)}")
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as server:
-            server.login(email_from, email_pass)
-            server.sendmail(email_from, all_recipients, msg.as_string())
-        log.info(f"✅ Email sent successfully to {len(all_recipients)} recipient(s).")
-        return True
-    except smtplib.SMTPAuthenticationError:
-        log.error(
-            "Gmail authentication failed. Make sure EMAIL_PASSWORD is a Gmail App Password "
-            "(not your login password). Generate at: myaccount.google.com/apppasswords"
-        )
-    except smtplib.SMTPException as e:
-        log.error(f"SMTP error: {e}")
-    except Exception as e:
-        log.error(f"Email send failed: {e}")
+    import time
 
-    return False
+    def _try_send() -> bool:
+        # Try port 587 STARTTLS first (more cloud-firewall-friendly), then 465 SSL fallback
+        last_err = None
+        for attempt in range(1, 4):
+            try:
+                log.info(f"Sending report to: {', '.join(all_recipients)} (attempt {attempt}/3)")
+                try:
+                    # Port 587 STARTTLS — preferred for cloud environments
+                    with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
+                        server.ehlo()
+                        server.starttls()
+                        server.ehlo()
+                        server.login(email_from, email_pass)
+                        server.sendmail(email_from, all_recipients, msg.as_string())
+                except (smtplib.SMTPException, OSError) as e587:
+                    log.warning(f"Port 587 failed: {e587} — retrying on port 465 SSL")
+                    # Port 465 SSL fallback
+                    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as server:
+                        server.login(email_from, email_pass)
+                        server.sendmail(email_from, all_recipients, msg.as_string())
+                log.info(f"✅ Email sent successfully to {len(all_recipients)} recipient(s).")
+                return True
+            except smtplib.SMTPAuthenticationError:
+                log.error(
+                    "Gmail authentication failed. Make sure EMAIL_PASSWORD is a Gmail App Password "
+                    "(not your login password). Generate at: myaccount.google.com/apppasswords"
+                )
+                return False  # Auth errors won't fix themselves — no retry
+            except Exception as e:
+                last_err = e
+                log.warning(f"Attempt {attempt}/3 failed: {e}")
+                if attempt < 3:
+                    time.sleep(10)
+        log.error(f"Email send failed after 3 attempts. Last error: {last_err}")
+        return False
+
+    return _try_send()
 
 
 if __name__ == "__main__":
